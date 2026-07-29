@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Medical Wiki">
+  <title>Medical Wiki</title>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --surface-color: #1e1e1e;
+      --text-main: #e0e0e0;
+      --text-sub: #a0a0a0;
+      --accent: #64b5f6;
+      --border: #333333;
+      --header-bg: #1f1f1f;
+    }
+    body {
+      margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif;
+      background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding-top: 110px;
+    }
+    * { box-sizing: border-box; }
+    
+    /* Header & Search */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; background: var(--header-bg); border-bottom: 1px solid var(--border);
+      padding: 10px 15px; z-index: 1000;
+    }
+    .header-title { font-size: 1.2rem; font-weight: bold; text-align: center; margin-bottom: 8px; color: #fff; cursor: pointer;}
+    .search-container { position: relative; }
+    #search-input {
+      width: 100%; padding: 12px; border-radius: 8px; border: none; background: #333; color: #fff; font-size: 16px; /* 16px to prevent iOS zoom */
+    }
+    #search-results {
+      position: absolute; top: 100%; left: 0; right: 0; background: var(--surface-color); border: 1px solid var(--border);
+      border-radius: 4px; max-height: 300px; overflow-y: auto; display: none; z-index: 1001; box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+    }
+    .search-item { padding: 12px; border-bottom: 1px solid var(--border); color: var(--accent); display: block; text-decoration: none; }
+    
+    /* Content Area */
+    #app { padding: 15px; padding-bottom: 50px; }
+    h1 { font-size: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 5px; margin-top: 0;}
+    h2 { font-size: 1.2rem; color: #fff; background: #2c2c2c; padding: 8px; border-left: 4px solid var(--accent); margin-top: 20px;}
+    
+    /* Breadcrumb & Navigation */
+    .nav-bar { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem;}
+    .back-btn { color: var(--accent); text-decoration: none; display: flex; align-items: center; padding: 5px 0;}
+    .breadcrumb { color: var(--text-sub); }
+    
+    /* Links */
+    a.wiki-link { color: var(--accent); text-decoration: none; font-weight: bold; padding: 2px 4px; background: rgba(100, 181, 246, 0.1); border-radius: 4px;}
+    a.wiki-link:active { background: rgba(100, 181, 246, 0.3); }
+    
+    /* Flowchart */
+    .flow-container { display: flex; flex-direction: column; align-items: center; margin: 20px 0; font-size: 0.9rem;}
+    .flow-box {
+      background: var(--surface-color); border: 1px solid var(--accent); color: var(--accent); padding: 12px;
+      border-radius: 8px; text-align: center; width: 90%; text-decoration: none; font-weight: bold; margin: 5px 0;
+    }
+    .flow-text { margin: 5px 0; text-align: center; color: var(--text-main); width: 90%; font-weight: bold;}
+    .flow-arrow { margin: 2px 0; color: var(--text-sub); text-align: center; }
+    .flow-row { display: flex; justify-content: space-between; width: 90%; gap: 10px; }
+    .flow-row .flow-box { width: 100%; }
+    
+    /* Accordion (Oral Exam) */
+    .qa-item { border: 1px solid var(--border); margin-bottom: 10px; border-radius: 6px; overflow: hidden;}
+    .qa-q { background: #2a2a2a; padding: 15px; font-weight: bold; cursor: pointer; color: #fff; }
+    .qa-a { background: var(--bg-color); padding: 15px; display: none; border-top: 1px solid var(--border);}
+    
+    /* Related Items */
+    .related-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .related-tag { background: #333; color: var(--text-main); padding: 8px 12px; border-radius: 20px; text-decoration: none; font-size: 0.9rem;}
+    
+    /* Top Page Menu */
+    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .menu-btn { background: var(--surface-color); border: 1px solid var(--border); padding: 15px; text-align: center; border-radius: 8px; color: var(--text-main); text-decoration: none; font-weight: bold;}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title" onclick="navigate('home')">MEDICAL WIKI</div>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="医学用語を検索..." autocomplete="off">
+      <div id="search-results"></div>
+    </div>
+  </header>
+
+  <div id="app"></div>
+
+  <script>
+    // ==========================================
+    // データベース (Medical Content)
+    // ==========================================
+    const db = {
+      "home": {
+        title: "トップページ",
+        html: `
+          <h1>医学学習ナビ</h1>
+          <div class="menu-grid">
+            <a href="#IHD" class="menu-btn">【循環器】<br>虚血性心疾患</a>
+            <a href="#" class="menu-btn" style="opacity:0.5;">【血液】</a>
+            <a href="#" class="menu-btn" style="opacity:0.5;">【呼吸器】</a>
+            <a href="#" class="menu-btn" style="opacity:0.5;">【消化器】</a>
+            <a href="#" class="menu-btn" style="opacity:0.5;">【腎臓】</a>
+            <a href="#" class="menu-btn" style="opacity:0.5;">【内分泌】</a>
+            <a href="#" class="menu-btn" style="opacity:0.5;">【神経】</a>
+            <a href="#" class="menu-btn" style="opacity:0.5;">【感染症】</a>
+          </div>
+        `
+      },
+      "IHD": {
+        title: "虚血性心疾患",
+        html: `
+          <h1>虚血性心疾患</h1>
+          <h2>総合フローチャート</h2>
+          <div class="flow-container">
+            <div class="flow-text">胸痛・胸部症状</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-text">ACSを疑う？</div>
+            <div class="flow-row">
+              <div class="flow-container" style="width:100%; margin:0;"><div class="flow-arrow">YES ↓</div></div>
+              <div class="flow-container" style="width:100%; margin:0;"><div class="flow-arrow">NO (慢性) ↓</div></div>
+            </div>
+            <div class="flow-row">
+              <div class="flow-container" style="width:100%; margin:0;">
+                <a href="#12ECG" class="flow-box">12誘導ECG</a>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-text">ST上昇あり？</div>
+                <div class="flow-row">
+                   <div style="text-align:center; width:50%">
+                     <div class="flow-arrow">YES</div>
+                     <a href="#STEMI" class="flow-box" style="width:100%">STEMI</a>
+                     <div class="flow-arrow">↓</div>
+                     <a href="#PCI" class="flow-box" style="width:100%">Primary PCI</a>
+                   </div>
+                   <div style="text-align:center; width:50%">
+                     <div class="flow-arrow">NO</div>
+                     <a href="#hsTn" class="flow-box" style="width:100%">高感度トロポニン</a>
+                     <div class="flow-arrow">↓</div>
+                     <a href="#NSTEMI" class="flow-box" style="width:100%">NSTEMI / UA</a>
+                   </div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <a href="#DAPT" class="flow-box">抗血小板療法 (DAPT)</a>
+              </div>
+              <div class="flow-container" style="width:100%; margin:0;">
+                <a href="#CCS" class="flow-box">慢性冠症候群</a>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-text">臨床尤度・リスク評価</div>
+                <div class="flow-arrow">↓</div>
+                <a href="#CCTA" class="flow-box">CCTA / 機能的虚血評価</a>
+                <div class="flow-arrow">↓</div>
+                <a href="#CAG" class="flow-box">必要に応じCAG</a>
+                <div class="flow-arrow">↓</div>
+                <a href="#CABG" class="flow-box">PCI / CABG / 薬物療法</a>
+              </div>
+            </div>
+          </div>
+          <h2>関連項目</h2>
+          <div class="related-tags">
+            <a href="#ACS" class="related-tag">ACS</a>
+            <a href="#SecondaryPrev" class="related-tag">二次予防</a>
+            <a href="#CardiogenicShock" class="related-tag">心原性ショック</a>
+          </div>
+        `
+      },
+      "ACS": {
+        title: "ACS (急性冠症候群)",
+        overview: "プラークの破綻やびらんにより冠動脈内に血栓が形成され、急激な心筋虚血を来す疾患群。<a href='#STEMI' class='wiki-link'>STEMI</a>、<a href='#NSTEMI' class='wiki-link'>NSTEMI</a>、<a href='#UA' class='wiki-link'>不安定狭心症(UA)</a>を含む。",
+        sections: [
+          { title: "病態生理", content: "アテローム硬化巣（プラーク）の破綻により、内皮下組織が血流に曝露され、血小板凝集と凝固カスケードが活性化し血栓が形成される。" },
+          { title: "診断", content: "①典型的な胸痛、②<a href='#12ECG' class='wiki-link'>12誘導ECG</a>の虚血性変化、③<a href='#hsTn' class='wiki-link'>高感度トロポニン</a>の上昇。12誘導ECGは最初の医療接触から10分以内に施行。" },
+          { title: "治療", content: "抗血栓療法（<a href='#Aspirin' class='wiki-link'>Aspirin</a> + <a href='#P2Y12' class='wiki-link'>P2Y12阻害薬</a>等）、抗凝固療法（ヘパリン）、抗虚血療法（硝酸薬）。再灌流療法として<a href='#PCI' class='wiki-link'>PCI</a>または<a href='#CABG' class='wiki-link'>CABG</a>。" }
+        ],
+        qa: [
+          { q: "ACSを疑った場合、最初に何を行う？", a: "10分以内の12誘導ECG取得、バイタルサインの確認、酸素投与（SpO2<90%の場合）、ルート確保。" },
+          { q: "Type 1 MIとType 2 MIの違いは？", a: "Type 1はプラーク破綻など冠動脈由来の一次性血栓性イベント。Type 2は心筋の酸素需要と供給のミスマッチ（貧血、頻脈、低血圧など）によるもの。" }
+        ],
+        related: ["STEMI", "NSTEMI", "UA", "PCI", "DAPT", "hsTn"]
+      },
+      "STEMI": {
+        title: "STEMI (ST上昇型心筋梗塞)",
+        overview: "冠動脈の完全閉塞により貫壁性の心筋壊死を生じる状態。",
+        sections: [
+          { title: "診断", content: "隣り合う2つ以上の誘導で新出のST上昇。または新出の左脚ブロック（LBBB）。" },
+          { title: "治療戦略", content: "一刻も早い再灌流療法が必要。診断から90分以内の<a href='#PCI' class='wiki-link'>Primary PCI</a>が第一選択。PCI施行不能施設では2時間以内に転送できなければ血栓溶解療法を考慮。" },
+          { title: "ガイドライン", content: "【日本・ESC2023】発症12時間以内の有症状患者には全例にPrimary PCIを推奨。12時間以降でも症状継続や血行動態不安定なら適応。" }
+        ],
+        qa: [
+          { q: "STEMIにおけるFMC-to-device timeの目標は？", a: "最初の医療接触（FMC）からデバイス（ワイヤー通過）まで90分以内（ESC2023等）。" }
+        ],
+        related: ["ACS", "PCI", "CardiogenicShock"]
+      },
+      "NSTEMI": {
+        title: "NSTEMI (非ST上昇型心筋梗塞)",
+        overview: "冠動脈の不完全閉塞や末梢塞栓により、ST上昇を伴わないが心筋バイオマーカー（トロポニン）が上昇する心筋虚血。",
+        sections: [
+          { title: "診断", content: "ECGでST低下や陰性T波を認めることが多いが、正常な場合もある。<a href='#hsTn' class='wiki-link'>高感度トロポニン</a>の経時的測定（0/1時間または0/2時間アルゴリズム）で診断。" },
+          { title: "重症度評価", content: "GRACEリスクスコア等を用いてリスク層別化を行う。" },
+          { title: "治療戦略", content: "超高リスク（血行動態不安定等）は2時間以内、高リスク（GRACEスコア>140等）は24時間以内の<a href='#CAG' class='wiki-link'>CAG</a>および<a href='#PCI' class='wiki-link'>PCI</a>を推奨。" }
+        ],
+        qa: [
+          { q: "STEMIとNSTEMIの初期対応の最大の違いは？", a: "STEMIは全例緊急PCIの適応だが、NSTEMIはリスク層別化を行い、緊急(2h)・早期(24h)・待機的のいずれかを選択する点。" }
+        ],
+        related: ["ACS", "UA", "hsTn", "CAG"]
+      },
+      "UA": {
+        title: "不安定狭心症 (Unstable Angina)",
+        overview: "心筋壊死（トロポニン上昇）を伴わないが、安静時胸痛や増悪型胸痛を呈する切迫した虚血状態。近年、高感度トロポニンの普及により、従来UAと診断されていた多くがNSTEMIに分類されるようになった。",
+        sections: [], qa: [], related: ["ACS", "NSTEMI", "CCS"]
+      },
+      "CCS": {
+        title: "慢性冠症候群 (Chronic Coronary Syndromes)",
+        overview: "従来の安定狭心症を含む、急性期を脱したあるいは慢性的に虚血症状を呈する病態。",
+        sections: [
+          { title: "診断", content: "症状の評価、臨床的検査前確率（PTP）の評価。中等度リスクには<a href='#CCTA' class='wiki-link'>CCTA</a>（冠動脈CT）や機能的虚血評価（負荷心エコー、負荷心筋シンチ、PET等）を推奨（ESC 2024）。" },
+          { title: "治療", content: "至適薬物療法（OMT）が基本。症状の改善や予後改善（左主幹部病変、多枝病変＋左室機能低下など）の適応があれば<a href='#PCI' class='wiki-link'>PCI</a>または<a href='#CABG' class='wiki-link'>CABG</a>。" }
+        ],
+        qa: [
+          { q: "CCSに対する初期検査として近年推奨が上がっているものは？", a: "冠動脈CT血管造影（CCTA）。" }
+        ],
+        related: ["CCTA", "FFR", "CABG"]
+      },
+      "PCI": {
+        title: "経皮的冠動脈インターベンション (PCI)",
+        overview: "カテーテルを用いて冠動脈の狭窄・閉塞病変を拡張・再開通させる治療法。",
+        sections: [
+          { title: "デバイス", content: "現在主流は薬剤溶出性ステント(DES)。生体吸収性ポリマーやポリマーフリーDESが主流。" },
+          { title: "合併症", content: "冠動脈穿孔、ステント血栓症（急性・亜急性・遅発性）、アクセス部位出血、コレステロール塞栓症など。" }
+        ],
+        qa: [
+          { q: "PCIとCABGの使い分け（特に多枝病変）は？", a: "SYNTAXスコアや糖尿病の有無を考慮。複雑な多枝病変や糖尿病合併例ではCABGが予後良好とされる（要確認: 近年のFAME 3試験等の結果も考慮）。" }
+        ],
+        related: ["CABG", "DAPT", "FFR", "iFR"]
+      },
+      "CABG": {
+        title: "冠動脈バイパス術 (CABG)",
+        overview: "狭窄部の末梢側に自己血管（内胸動脈、橈骨動脈、大伏在静脈など）を用いてバイパスを作成する外科的治療。",
+        sections: [
+          { title: "適応", content: "左主幹部病変、3枝病変、左室機能低下を伴う多枝病変、糖尿病合併多枝病変など。" }
+        ], qa: [], related: ["PCI", "CCS"]
+      },
+      "DAPT": {
+        title: "抗血小板薬2剤併用療法 (DAPT)",
+        overview: "AspirinとP2Y12阻害薬を併用し、ステント血栓症や心血管イベントを防ぐ治療。",
+        sections: [
+          { title: "期間の決定", content: "患者の虚血リスクと出血リスク（ARC-HBR基準など）のバランスで決定する。" },
+          { title: "期間の目安", content: "【ACS】標準12ヶ月。出血高リスクでは1〜3ヶ月でP2Y12単剤（SAPT）へ移行する戦略（SAPT de-escalation）が近年注目。【CCS】標準1〜6ヶ月。" }
+        ],
+        qa: [
+          { q: "DAPTの期間は何で決まる？", a: "出血リスク（ARC-HBRなど）と虚血/血栓リスクのバランス。近年は出血回避のため短期DAPT→単剤（SAPT）への移行がトレンド。" }
+        ],
+        related: ["Aspirin", "P2Y12", "Clopidogrel", "Prasugrel"]
+      },
+      "Aspirin": { title: "Aspirin (アスピリン)", overview: "COX-1を非可逆的に阻害しトロンボキサンA2産生を抑制する抗血小板薬。用量は維持量100mg/日。ローディングは160-300mg。", sections: [], qa: [], related: ["DAPT"] },
+      "P2Y12": { title: "P2Y12阻害薬", overview: "ADP受容体であるP2Y12を阻害する抗血小板薬。チエノピリジン系（クロピドグレル、プラスグレル）と非チエノピリジン系（チカグレロル）がある。", sections: [], qa: [], related: ["Clopidogrel", "Prasugrel", "Ticagrelor"] },
+      "Clopidogrel": { title: "Clopidogrel (クロピドグレル)", overview: "CYP2C19で代謝され活性化する。個人差(CYP2C19のPM)が大きい。", sections: [], qa: [], related: ["P2Y12", "DAPT"] },
+      "Prasugrel": { title: "Prasugrel (プラスグレル)", overview: "効果発現が早く抗血小板作用が強力。日本では20mgローディング、3.75mg維持量が標準。", sections: [], qa: [], related: ["P2Y12", "DAPT"] },
+      "Ticagrelor": { title: "Ticagrelor (チカグレロル)", overview: "非可逆的阻害ではなく可逆的結合。効果発現が早い。1日2回投与。", sections: [], qa: [], related: ["P2Y12", "DAPT"] },
+      "hsTn": {
+        title: "高感度トロポニン (hs-cTn)",
+        overview: "心筋傷害に特異的なバイオマーカー。微量な上昇を検出可能。",
+        sections: [
+          { title: "診断アルゴリズム", content: "ESC 2023ガイドラインでは、0時間/1時間または0時間/2時間の迅速なRule-out/Rule-inアルゴリズムを推奨。" }
+        ],
+        qa: [
+          { q: "トロポニンが高ければ心筋梗塞なのか？", a: "否。心筋炎、たこつぼ症候群、心不全、腎不全、肺塞栓でも上昇する（心筋傷害）。虚血の証拠（症状、ECG変化）を伴って初めて心筋梗塞(MI)と診断される。" }
+        ],
+        related: ["ACS", "NSTEMI"]
+      },
+      "12ECG": { title: "12誘導ECG", overview: "虚血性心疾患診断の要。STEMIの早期診断に必須。", sections: [], qa: [], related: ["STEMI", "ACS"] },
+      "CCTA": { title: "CCTA (冠動脈CT血管造影)", overview: "非侵襲的に冠動脈プラークや狭窄を評価。CCSの中等度リスクの第一選択として推奨度が高い。", sections: [], qa: [], related: ["CCS"] },
+      "CAG": { title: "CAG (冠動脈造影)", overview: "カテーテルを用いた侵襲的冠動脈評価。ゴールドスタンダード。", sections: [], qa: [], related: ["PCI", "FFR"] },
+      "FFR": { title: "FFR (冠血流予備量比)", overview: "最大充血時の狭窄遠位部圧/大動脈圧。0.80以下で心筋虚血ありと判断しPCIの適応とする。", sections: [], qa: [], related: ["PCI", "iFR"] },
+      "iFR": { title: "iFR (瞬時無血流比)", overview: "安静時（拡張期）の圧指標。0.89以下で虚血ありと判断。充血薬（ATP等）が不要。", sections: [], qa: [], related: ["PCI", "FFR"] },
+      "CardiogenicShock": {
+        title: "心原性ショック",
+        overview: "心ポンプ機能の高度低下による組織低灌流。AMIの重篤な合併症。",
+        sections: [
+          { title: "治療", content: "カテコールアミン、補助循環（IABP、VA-ECMO、Impella）。近年はImpella（経皮的補助人工心臓）の使用が増加。" }
+        ], qa: [], related: ["STEMI", "PCI"]
+      },
+      "SecondaryPrev": {
+        title: "二次予防",
+        overview: "再発防止のための包括的管理。",
+        sections: [
+          { title: "管理目標", content: "LDL-C管理（超高リスクでは < 55mg/dLまたは < 70mg/dL）、血圧管理（130/80mmHg未満）、糖尿病管理、禁煙、体重管理など。" }
+        ], qa: [
+           { q: "ACSの二次予防に必要な薬剤は？", a: "DAPT、スタチン（強力なLDL低下）、β遮断薬、ACE阻害薬/ARB（特にLVEF低下例）。" }
+        ], related: ["CardiacRehab", "DAPT"]
+      },
+      "CardiacRehab": { title: "心臓リハビリテーション", overview: "運動療法、食事指導、服薬指導を含めた包括的プログラム。予後改善効果が証明されている。", sections: [], qa: [], related: ["SecondaryPrev"] }
+    };
+
+    // ==========================================
+    // アプリケーション ロジック
+    // ==========================================
+    const appDiv = document.getElementById('app');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+
+    // 検索機能
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      searchResults.innerHTML = '';
+      if (query.length === 0) {
+        searchResults.style.display = 'none';
+        return;
+      }
+      let matches = 0;
+      for (const [key, data] of Object.entries(db)) {
+        if (key === 'home') continue;
+        if (data.title.toLowerCase().includes(query) || (data.overview && data.overview.toLowerCase().includes(query))) {
+          const a = document.createElement('a');
+          a.href = `#${key}`;
+          a.className = 'search-item';
+          a.textContent = data.title;
+          a.onclick = () => { searchInput.value = ''; searchResults.style.display = 'none'; };
+          searchResults.appendChild(a);
+          matches++;
+        }
+      }
+      searchResults.style.display = matches > 0 ? 'block' : 'none';
+    });
+
+    // アコーディオンのトグル
+    window.toggleQA = function(el) {
+      const answer = el.nextElementSibling;
+      if(answer.style.display === "block") {
+        answer.style.display = "none";
+      } else {
+        answer.style.display = "block";
+      }
+    };
+
+    // ページ描画
+    function renderPage(id) {
+      if (!db[id]) id = 'home';
+      const data = db[id];
+      window.scrollTo(0, 0);
+
+      // カスタムHTMLが定義されていればそのまま表示（トップページなど）
+      if (data.html) {
+        appDiv.innerHTML = data.html;
+        return;
+      }
+
+      // Wikiページの構築
+      let html = `<div class="nav-bar">
+                    <a href="javascript:history.back()" class="back-btn">← 前のページ</a>
+                    <span class="breadcrumb">ホーム > ${data.title}</span>
+                  </div>`;
+      html += `<h1>${data.title}</h1>`;
+      
+      if (data.overview) {
+        html += `<h2>概要</h2><p>${data.overview}</p>`;
+      }
+
+      if (data.sections && data.sections.length > 0) {
+        data.sections.forEach(sec => {
+          html += `<h2>${sec.title}</h2><p>${sec.content}</p>`;
+        });
+      }
+
+      if (data.qa && data.qa.length > 0) {
+        html += `<h2>研修医口頭試問</h2>`;
+        data.qa.forEach(item => {
+          html += `<div class="qa-item">
+                     <div class="qa-q" onclick="toggleQA(this)">Q. ${item.q}</div>
+                     <div class="qa-a">${item.a}</div>
+                   </div>`;
+        });
+      }
+
+      if (data.related && data.related.length > 0) {
+        html += `<h2>関連項目</h2><div class="related-tags">`;
+        data.related.forEach(rel => {
+          if(db[rel]) {
+            html += `<a href="#${rel}" class="related-tag">${db[rel].title}</a>`;
+          }
+        });
+        html += `</div>`;
+      }
+      
+      html += `<h2>参考文献</h2><p style="font-size:0.85rem; color:var(--text-sub);">
+        ・2023 ESC Guidelines for the management of acute coronary syndromes<br>
+        ・2024 ESC Guidelines for the management of chronic coronary syndromes<br>
+        ・日本循環器学会 フォーカスアップデート版ガイドライン<br>
+        ※記載の数値・推奨は最新の原典を<span style="color:#ffb74d;">要確認</span>。
+      </p>`;
+
+      appDiv.innerHTML = html;
+    }
+
+    // 画面遷移（ハッシュ変更）の検知
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      renderPage(hash || 'home');
+    });
+
+    window.navigate = function(id) {
+      window.location.hash = id;
+    };
+
+    // 初期化
+    const initialHash = window.location.hash.replace('#', '');
+    renderPage(initialHash || 'home');
+  </script>
+</body>
+</html>
