@@ -95,23 +95,37 @@
     // データベース (Medical Content)
     // ==========================================
     const db = {
-      "home": {
+            "home": {
         title: "トップページ",
         html: `
           <h1>医学学習ナビ</h1>
           <div class="menu-grid">
-            <a href="#IHD" class="menu-btn">【循環器】<br>虚血性心疾患</a>
-            <a href="#HF" class="menu-btn">【循環器】<br>心不全</a>
-            <a href="#" class="menu-btn" style="opacity:0.5;">【血液】</a>
-            <a href="#" class="menu-btn" style="opacity:0.5;">【呼吸器】</a>
-            <a href="#" class="menu-btn" style="opacity:0.5;">【消化器】</a>
-            <a href="#" class="menu-btn" style="opacity:0.5;">【腎臓】</a>
-            <a href="#" class="menu-btn" style="opacity:0.5;">【内分泌】</a>
-            <a href="#" class="menu-btn" style="opacity:0.5;">【神経】</a>
-            <a href="#" class="menu-btn" style="opacity:0.5;">【感染症】</a>
+            <a href="#Cardiology" class="menu-btn">【循環器】</a>
+            <a href="#Hematology" class="menu-btn" style="opacity:0.5;">【血液】</a>
+            <a href="#Pulmonology" class="menu-btn" style="opacity:0.5;">【呼吸器】</a>
+            <a href="#Gastroenterology" class="menu-btn" style="opacity:0.5;">【消化器】</a>
+            <a href="#Nephrology" class="menu-btn" style="opacity:0.5;">【腎臓】</a>
+            <a href="#Endocrinology" class="menu-btn" style="opacity:0.5;">【内分泌】</a>
+            <a href="#Neurology" class="menu-btn" style="opacity:0.5;">【神経】</a>
+            <a href="#Infectious" class="menu-btn" style="opacity:0.5;">【感染症】</a>
           </div>
         `
       },
+　　　　      "Cardiology": {
+        title: "循環器",
+        html: `
+          <div class="nav-bar">
+            <a href="#home" class="back-btn">← トップへ戻る</a>
+            <span class="breadcrumb">ホーム > 循環器</span>
+          </div>
+          <h1>循環器</h1>
+          <div class="menu-grid">
+            <a href="#IHD" class="menu-btn">虚血性心疾患</a>
+            <a href="#HF" class="menu-btn">心不全</a>
+          </div>
+        `
+      },
+
       "IHD": {
         title: "虚血性心疾患",
         html: `
