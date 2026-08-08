@@ -123,7 +123,26 @@
       
       let matches = 0;
       for (const [id, data] of Object.entries(db)) {
+        let isMatch = false;
+
+        // 1. タイトルまたは概要に一致するか確認
         if (data.title.toLowerCase().includes(query) || (data.overview && data.overview.toLowerCase().includes(query))) {
+          isMatch = true;
+        } else {
+          // 2. 本文・治療・口頭試問など、その他の全文章を結合して全文検索
+          const allText = Object.values(data).map(val => {
+            if (typeof val === 'string') return val;
+            if (Array.isArray(val)) return JSON.stringify(val); // フローチャートや口頭試問の配列も文字列化
+            return '';
+          }).join(' ').toLowerCase();
+
+          if (allText.includes(query)) {
+            isMatch = true;
+          }
+        }
+
+        // 一致した場合、検索結果に表示
+        if (isMatch) {
           const a = document.createElement('a');
           a.href = `#${id}`;
           a.className = 'search-item';
