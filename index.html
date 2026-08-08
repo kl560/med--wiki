@@ -1,282 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Medical Wiki">
+  <title>Medical Wiki</title>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --surface-color: #1e1e1e;
+      --text-main: #e0e0e0;
+      --text-sub: #a0a0a0;
+      --accent: #64b5f6;
+      --border: #333333;
+      --header-bg: #1f1f1f;
+    }
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding-top: 110px; }
+    * { box-sizing: border-box; }
+    
+    /* Header & Search */
+    header { position: fixed; top: 0; left: 0; right: 0; background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 10px 15px; z-index: 1000; }
+    .header-title { font-size: 1.2rem; font-weight: bold; text-align: center; margin-bottom: 8px; color: #fff; cursor: pointer;}
+    .search-container { position: relative; }
+    #search-input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #333; color: #fff; font-size: 16px; }
+    #search-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface-color); border: 1px solid var(--border); border-radius: 4px; max-height: 300px; overflow-y: auto; display: none; z-index: 1001; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
+    .search-item { padding: 12px; border-bottom: 1px solid var(--border); color: var(--accent); display: block; text-decoration: none; }
+    
+    /* Content Area */
+    #app { padding: 15px; padding-bottom: 50px; }
+    h1 { font-size: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 5px; margin-top: 0;}
+    h2 { font-size: 1.2rem; color: #fff; background: #2c2c2c; padding: 8px; border-left: 4px solid var(--accent); margin-top: 20px;}
+    
+    /* Breadcrumb & Navigation */
+    .nav-bar { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem;}
+    .back-btn { color: var(--accent); text-decoration: none; display: flex; align-items: center; padding: 5px 0;}
+    .breadcrumb { color: var(--text-sub); }
+    .breadcrumb a { color: var(--text-sub); text-decoration: none; }
+    
+    /* Links */
+    a.wiki-link { color: var(--accent); text-decoration: none; font-weight: bold; padding: 2px 4px; background: rgba(100, 181, 246, 0.1); border-radius: 4px;}
+    
+    /* Flowchart */
+    .flow-container { display: flex; flex-direction: column; align-items: center; margin: 20px 0; font-size: 0.9rem;}
+    .flow-box { background: var(--surface-color); border: 1px solid var(--accent); color: var(--accent); padding: 12px; border-radius: 8px; text-align: center; width: 90%; text-decoration: none; font-weight: bold; margin: 5px 0; display: block;}
+    .flow-text { background: #333; padding: 12px; border-radius: 8px; margin: 5px 0; text-align: center; color: var(--text-main); width: 90%; font-weight: bold;}
+    .flow-arrow { margin: 2px 0; color: var(--text-sub); text-align: center; font-weight: bold;}
+    
+    /* Accordion (Oral Exam) */
+    .qa-item { border: 1px solid var(--border); margin-bottom: 10px; border-radius: 6px; overflow: hidden;}
+    .qa-q { background: #2a2a2a; padding: 15px; font-weight: bold; cursor: pointer; color: #fff; }
+    .qa-a { background: var(--bg-color); padding: 15px; display: none; border-top: 1px solid var(--border);}
+    
+    /* Top Page Menu & Related Items */
+    .menu-grid, .related-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .menu-btn { background: var(--surface-color); border: 1px solid var(--border); padding: 15px; text-align: center; border-radius: 8px; color: var(--text-main); text-decoration: none; font-weight: bold; width: calc(50% - 5px);}
+    .related-tag { background: #333; color: var(--text-main); padding: 8px 12px; border-radius: 20px; text-decoration: none; font-size: 0.9rem;}
+    .category-title-btn { width: 100%; background: #2c2c2c; color: #fff; margin-top: 10px; padding: 10px; text-align: center; border-radius: 4px; font-weight: bold; text-decoration: none;}
+  </style>
+</head>
+<body>
 
-        overview: "再発防止のための包括的管理。",
-        sections: [
-          { title: "管理目標", content: "LDL-C管理（超高リスクでは < 55mg/dLまたは < 70mg/dL）、血圧管理（130/80mmHg未満）、糖尿病管理、禁煙、体重管理など。" }
-        ], qa: [
-           { q: "ACSの二次予防に必要な薬剤は？", a: "DAPT、スタチン（強力なLDL低下）、β遮断薬、ACE阻害薬/ARB（特にLVEF低下例）。" }
-        ], related: ["CardiacRehab", "DAPT"]
-      },
-      "CardiacRehab": { title: "心臓リハビリテーション", overview: "運動療法、食事指導、服薬指導を含めた包括的プログラム。予後改善効果が証明されている。", sections: [], qa: [], related: ["SecondaryPrev"] }
-   
-          ,
-      "HF": {
-        title: "心不全",
-        overview: "心臓の構造的・機能的異常により心室の充満または拍出が障害され、全身の需要に見合う血流量を維持できない状態。",
-        sections: [
-          { title: "分類", content: "LVEFにより、HFrEF (EF≦40%)、HFmrEF (EF 41-49%)、HFpEF (EF≧50%) に分類される。" },
-          { title: "HFrEFの薬物療法", content: "基本となるFantastic Four（ARNI/ACE阻害薬、β遮断薬、MRA、SGLT2阻害薬）の導入と忍容性に応じた増量(up-titration)を行う。" }
-        ],
-        qa: [
-          { q: "心不全の急性期治療にNPPVを用いる主な目的は？", a: "胸腔内圧上昇による静脈還流量の減少（前負荷軽減）、呼吸仕事量の軽減など。" }
-        ],
-        related: ["CardiogenicShock"]
+  <header>
+    <div class="header-title" onclick="window.location.hash='home'">MEDICAL WIKI</div>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="医学用語を検索..." autocomplete="off">
+      <div id="search-results"></div>
+    </div>
+  </header>
+
+  <div id="app"></div>
+
+  <script>
+    // ==================================================
+    // 1. APP CORE & CONTENT ENGINE
+    // ==================================================
+    
+    // データベースとカテゴリマップ
+    const db = {};
+    const categoryMap = {};
+
+    // テンプレートエンジン（自動生成する項目の定義）
+    const sectionTemplates = [
+      { key: 'overview', title: '概要' }, { key: 'definition', title: '定義' },
+      { key: 'epidemiology', title: '疫学' }, { key: 'pathophysiology', title: '病態生理' },
+      { key: 'riskFactors', title: '危険因子' }, { key: 'symptoms', title: '症状' },
+      { key: 'historyTaking', title: '問診' }, { key: 'physicalExam', title: '身体診察' },
+      { key: 'initialTests', title: '初期検査' }, { key: 'imaging', title: '画像所見' },
+      { key: 'bloodTests', title: '血液検査' }, { key: 'diagnosisCriteria', title: '診断基準' },
+      { key: 'severity', title: '重症度分類' }, { key: 'differential', title: '鑑別診断' },
+      { key: 'treatment', title: '治療' }, { key: 'medication', title: '薬物療法' },
+      { key: 'nonPharma', title: '非薬物療法' }, { key: 'surgery', title: '手術・処置' },
+      { key: 'prognosis', title: '予後' }, { key: 'followUp', title: 'フォローアップ' },
+      { key: 'importantPoints', title: '重要ポイント' }, { key: 'references', title: '参考文献' }
+    ];
+
+    // コンテンツ登録関数
+    function addMedicalContent(data) {
+      if (!data || !data.id) return;
+      db[data.id] = data;
+      
+      if (data.category) {
+        if (!categoryMap[data.category]) categoryMap[data.category] = [];
+        if (!categoryMap[data.category].includes(data.id)) categoryMap[data.category].push(data.id);
       }
-            ,
-      // ==========================================
-      // 弁膜症・心内膜疾患
-      // ==========================================
-      "AS": {
-        title: "大動脈弁狭窄症 (AS)",
-        overview: "大動脈弁の硬化・石灰化により左室からの血液駆出が妨げられる疾患。進行すると狭心痛、失神、心不全を来す。",
-        sections: [
-          { title: "重症度評価", content: "心エコーにて、最大血流速度≧4.0m/s、平均圧較差≧40mmHg、弁口面積≦1.0cm²（または≦0.6cm²/m²）で重症(Severe AS)と診断（JCS 2020弁膜症治療ガイドライン）。" },
-          { title: "治療介入の目安", content: "有症状のSevere ASは全例介入適応。無症状でもLVEF<50%や、超重症（Vmax≧5.0m/s等）の場合は早期手術を考慮。" },
-          { title: "SAVR vs TAVI", content: "【JCS 2020】年齢を優先的な目安とし、75歳未満は外科的大動脈弁置換術(SAVR)、80歳以上は経カテーテル大動脈弁留置術(TAVI)を推奨。75〜79歳は解剖学的特徴やフレイルを考慮しハートチームで決定。" }
-        ],
-        qa: [
-          { q: "ASの3大症状とは？", a: "胸痛（狭心痛）、失神、心不全。これらが出現すると予後が著しく悪化する（無治療での平均余命はそれぞれ5年、3年、2年）。" }
-        ],
-        related: ["HF", "AR"]
-      },
-      "AR": {
-        title: "大動脈弁閉鎖不全症 (AR)",
-        overview: "拡張期に大動脈から左室へ血液が逆流する疾患。左室の容量負荷および圧負荷を引き起こす。",
-        sections: [
-          { title: "治療適応", content: "有症状の重症ARは手術適応。無症状でも、LVEF≦50%または左室収縮末期径(LVESD)＞50mm（またはLVESD index＞25mm/m²）であれば手術適応（JCS 2020）。" }
-        ], qa: [], related: ["AS", "HF", "AAD"]
-      },
-      "MR": {
-        title: "僧帽弁閉鎖不全症 (MR)",
-        overview: "収縮期に左室から左房へ血液が逆流する疾患。弁自体の器質的異常による一次性(Primary)と、左室・左房の拡大による二次性(Secondary)に大別される。",
-        sections: [
-          { title: "治療戦略", content: "一次性MRは弁形成術(MVP)が第一選択。二次性MRは心不全に対する至適薬物療法(GDMT)を優先し、抵抗性の場合に経カテーテル僧帽弁縁端接合術(TEER/MitraClip等)や外科手術を検討。" }
-        ], qa: [], related: ["HF", "AF"]
-      },
-      "MS": {
-        title: "僧帽弁狭窄症 (MS)",
-        overview: "リウマチ熱の後遺症などにより僧帽弁が肥厚・癒着し、左房から左室への流入が障害される疾患。",
-        sections: [
-          { title: "合併症", content: "左房圧上昇に伴う<a href='#AF' class='wiki-link'>心房細動(AF)</a>を高率に合併し、左房内血栓・心原性脳塞栓症のリスクが極めて高い。PTMC（経皮的僧帽弁交連裂開術）や弁置換術が治療の主体。" }
-        ], qa: [], related: ["AF"]
-      },
-      "IE": {
-        title: "感染性心内膜炎 (IE)",
-        overview: "心臓の弁や心内膜に細菌等が感染し、疣贅（vegetation）を形成する敗血症性疾患。",
-        sections: [
-          { title: "診断（修正Duke基準）", content: "血液培養陽性（複数回）と心エコーでの疣贅確認が大基準。経験的治療の前に必ず複数セットの血液培養を採取する。" },
-          { title: "手術適応", content: "心不全のコントロール不良、抗菌薬抵抗性の感染継続、10mm以上の可動性疣贅による塞栓リスクが高い場合などは早期手術（弁置換・形成等）の適応。" }
-        ], qa: [], related: ["MR", "AR"]
-      },
+    }
 
-      // ==========================================
-      // 心筋疾患
-      // ==========================================
-      "DCM": {
-        title: "拡張型心筋症 (DCM)",
-        overview: "左室（または両室）の拡大と収縮能低下を特徴とし、原因不明（特発性・遺伝性）の心筋疾患。",
-        sections: [
-          { title: "治療", content: "HFrEFに準じた薬物療法（ARNI、β遮断薬、MRA、SGLT2阻害薬）が基本。重症例ではCRT（心臓再同期療法）、LVAD（植込型補助人工心臓）、心移植を検討。" }
-        ], qa: [], related: ["HF", "VT"]
-      },
-      "HCM": {
-        title: "肥大型心筋症 (HCM)",
-        overview: "明らかな血圧上昇や大動脈弁狭窄などの負荷がないにもかかわらず左室肥大を呈する疾患。サルコメア遺伝子変異が多い。",
-        sections: [
-          { title: "閉塞性(HOCM)の管理", content: "左室流出路狭窄(LVOTO)を伴う場合、β遮断薬や非ジヒドロピリジン系Ca拮抗薬を使用。薬剤抵抗性有症状例には中隔縮小療法（PTSMAや心筋切除術）を考慮。" },
-          { title: "突然死予防", content: "若年者の突然死の主要原因。失神歴、家族歴、非持続性VTなどからリスク層別化を行いICD植え込みを検討。" }
-        ], qa: [], related: ["HF", "VT", "VF"]
-      },
-      "CardiacAmyloidosis": {
-        title: "心アミロイドーシス",
-        overview: "アミロイド蛋白が心筋間質に沈着し、高度な拡張能障害（HFpEF）や刺激伝導系障害を来す疾患。",
-        sections: [
-          { title: "病型と診断", content: "AL型（原発性）とATTR型（トランスサイレチン型：野生型と遺伝性）に大別。99mTc-ピロリン酸シンチグラフィがATTR型の非侵襲的診断に極めて有用。" },
-          { title: "治療", content: "AL型は化学療法。ATTR型はタファミジス（トランスサイレチン安定化薬）の有効性が証明されている。" }
-        ], qa: [], related: ["HF", "AVB"]
-      },
-      "CardiacSarcoidosis": {
-        title: "心サルコイドーシス",
-        overview: "非乾酪性類上皮細胞肉芽腫が心筋に形成され、致死性不整脈や心不全を来す疾患。",
-        sections: [
-          { title: "特徴", content: "若年〜中年の完全房室ブロック（AVB）や心室頻拍（VT）を見た場合は必ず鑑別。FDG-PETが診断および炎症の活動性評価に有用。ステロイド治療が主体。" }
-        ], qa: [], related: ["AVB", "VT"]
-      },
-      "Myocarditis": {
-        title: "急性心筋炎",
-        overview: "ウイルス感染（コクサッキー等）や免疫反応により心筋に急性の炎症が生じる病態。",
-        sections: [
-          { title: "劇症型心筋炎", content: "急速に血行動態が破綻する重篤な病態。PCPS（VA-ECMO）やImpellaなどの機械的補助循環の早期導入が救命の鍵を握る。" }
-        ], qa: [], related: ["CardiogenicShock", "HF"]
-      },
+    // アコーディオン動作
+    window.toggleQA = function(el) {
+      const answer = el.nextElementSibling;
+      answer.style.display = answer.style.display === "block" ? "none" : "block";
+    };
 
-      // ==========================================
-      // 不整脈
-      // ==========================================
-      "AF": {
-        title: "心房細動 (AF)",
-        overview: "心房が不規則かつ高頻度に細かく震える状態。加齢とともに増加し、心原性脳塞栓症と心不全の最大のリスク因子。",
-        sections: [
-          { title: "抗凝固療法", content: "CHADS2スコア（またはCHA2DS2-VAScスコア）、日本独自のHELT-E2S2スコア（JCS 2024不整脈フォーカスアップデート）で脳梗塞リスクを評価し、DOACまたはワルファリンを導入。" },
-          { title: "リズムコントロール", content: "有症状例や心不全合併例では、カテーテルアブレーション（肺静脈隔離術等）による洞調律維持が強く推奨される。" }
-        ],
-        qa: [
-          { q: "CHADS2スコアの項目は？", a: "Congestive heart failure(心不全), Hypertension(高血圧), Age≧75(年齢), Diabetes(糖尿病), Stroke(脳卒中/TIA歴[2点])。1点以上で抗凝固療法を考慮。" }
-        ],
-        related: ["HF", "AFL"]
-      },
-      "AFL": {
-        title: "心房粗動 (AFL)",
-        overview: "右房内の三尖弁輪を旋回する規則正しいマクロリエントリー頻拍。ECGでノコギリ歯状のF波を認める。",
-        sections: [
-          { title: "治療", content: "抗不整脈薬は効きにくく、下大静脈-三尖弁輪間峡部（CTI）の線状アブレーションの根治率が極めて高い（95%以上）。脳梗塞リスクはAFに準じて評価。" }
-        ], qa: [], related: ["AF"]
-      },
-      "PSVT": {
-        title: "発作性上室頻拍 (PSVT)",
-        overview: "突然発症・突然停止する規則正しい頻脈。AVNRT（房室結節回帰性頻拍）とAVRT（房室回帰性頻拍）が大部分を占める。",
-        sections: [
-          { title: "急性期対応", content: "迷走神経刺激（Valsalva手技）。無効ならATP（アデノシン）の急速静注またはCa拮抗薬静注。" },
-          { title: "根治治療", content: "カテーテルアブレーションが第一選択。" }
-        ], qa: [], related: ["WPW"]
-      },
-      "VT": {
-        title: "心室頻拍 (VT)",
-        overview: "心室由来の幅の広いQRS（0.12秒以上）が3連発以上続く頻脈。血行動態が破綻しやすい。",
-        sections: [
-          { title: "治療", content: "血圧低下・意識障害があれば直ちに同期下カルディオバージョン。血行動態安定例にはアミオダロン、ニフェカラント、リドカイン静注。基礎に器質的心疾患（陳旧性心筋梗塞など）がある場合はICD植え込みが適応。" }
-        ], qa: [], related: ["VF", "IHD", "DCM"]
-      },
-      "VF": {
-        title: "心室細動 (VF)",
-        overview: "心室が完全に不規則に痙攣し、心拍出量がゼロとなる致死性不整脈。",
-        sections: [
-          { title: "対応", content: "発見次第、即座の胸骨圧迫（CPR）と電気的除細動が必要。二次予防として全例にICD植え込み適応。" }
-        ], qa: [], related: ["VT", "STEMI", "Brugada"]
-      },
-      "SSS": {
-        title: "洞不全症候群 (SSS)",
-        overview: "洞結節の機能低下により、著明な徐脈や洞停止、あるいは頻脈徐脈症候群を来す疾患。",
-        sections: [
-          { title: "治療適応", content: "めまい、失神、心不全などの「症状を伴う徐脈」がペースメーカー植え込みの絶対適応。" }
-        ], qa: [], related: ["AVB"]
-      },
-      "AVB": {
-        title: "房室ブロック (AVB)",
-        overview: "心房から心室への興奮伝導が遅延または途絶する状態。",
-        sections: [
-          { title: "分類と治療", content: "1度、2度（Wenckebach型、Mobitz II型）、3度（完全房室ブロック）に分類。Mobitz II型と3度は突然死のリスクがあり、有症状またはQRS幅拡大例はペースメーカーの適応。" }
-        ], qa: [], related: ["SSS", "CardiacSarcoidosis"]
-      },
-      "WPW": {
-        title: "WPW症候群",
-        overview: "正常な房室伝導路以外に副伝導路（ケント束）が存在し、心室の早期興奮（デルタ波）を認める疾患。",
-        sections: [
-          { title: "合併症", content: "AFを合併した場合（偽性心室頻拍）、極めて高度な頻脈からVFへ移行する危険がある。ジギタリスや非ジヒドロピリジン系Ca拮抗薬は禁忌（副伝導路伝導を亢進させるため）。" }
-        ], qa: [], related: ["PSVT", "AF"]
-      },
-      "Brugada": {
-        title: "Brugada症候群",
-        overview: "V1-V3誘導での特異的なST上昇（coved型等）を特徴とし、器質的心疾患がない青壮年男性の夜間ポックリ病の原因となる疾患。",
-        sections: [
-          { title: "治療", content: "有効な薬物はなく、失神歴やVF蘇生歴のある患者にはICD植え込みがクラスI推奨。" }
-        ], qa: [], related: ["VF"]
-      },
-
-      // ==========================================
-      // 大動脈・末梢血管疾患
-      // ==========================================
-      "AAD": {
-        title: "急性大動脈解離 (AAD)",
-        overview: "大動脈の血流が中膜に解離腔（偽腔）を形成する致死性疾患。突然の背部痛や胸痛で発症。",
-        sections: [
-          { title: "分類", content: "上行大動脈に解離が及ぶものをStanford A型、及ばないものをB型とする。" },
-          { title: "治療戦略", content: "A型は心タンポナーデや冠動脈解離のリスクがあり、緊急の人工血管置換術の絶対適応。B型は降圧と安静による保存的治療が基本だが、臓器虚血や破裂切迫があればTEVAR（胸部大動脈ステントグラフト内挿術）を検討。" }
-        ], qa: [], related: ["Tamponade", "TAA"]
-      },
-      "TAA": {
-        title: "胸部大動脈瘤 (TAA)",
-        overview: "胸部大動脈が正常径の1.5倍以上に拡大した状態。破裂すると致命的。",
-        sections: [
-          { title: "治療", content: "最大径が55-60mmを超える、または拡大速度が速い場合に手術（人工血管置換術またはTEVAR）を検討。マルファン症候群等ではより早期から適応。" }
-        ], qa: [], related: ["AAD", "AAA"]
-      },
-      "AAA": {
-        title: "腹部大動脈瘤 (AAA)",
-        overview: "腹部大動脈の限局性拡張。動脈硬化が主要因。",
-        sections: [
-          { title: "治療", content: "男性で50-55mm、女性で45-50mmを超えた場合、人工血管置換術またはEVAR（ステントグラフト内挿術）の適応（JCS 2020大動脈瘤ガイドライン）。解剖学的条件が許せば低侵襲なEVARが選択されやすい。" }
-        ], qa: [], related: ["TAA", "PAD"]
-      },
-      "PAD": {
-        title: "末梢動脈疾患 (PAD)",
-        overview: "主に下肢の動脈に狭窄・閉塞が生じ、血流障害を来す疾患。",
-        sections: [
-          { title: "診断", content: "足関節上腕血圧比(ABI) ≦0.9で疑う。間欠性跛行（Fontaine II度）や包括的高度慢性下肢虚血(CLTI)の有無を評価。" },
-          { title: "治療", content: "【JCS 2022/2025 Focus Update】抗血小板薬、シロスタゾール、運動療法。CLTIや生活の質を著しく損なう跛行には血管内治療(EVT)やバイパス術を実施。" }
-        ], qa: [], related: ["IHD", "AAA"]
-      },
-
-      // ==========================================
-      // 静脈・肺循環疾患
-      // ==========================================
-      "DVT": {
-        title: "深部静脈血栓症 (DVT)",
-        overview: "主に下肢や骨盤内の深部静脈に血栓が形成される疾患。Virchowの三徴（血流鬱滞、血管内皮障害、血液凝固能亢進）が原因。",
-        sections: [
-          { title: "診断・治療", content: "下肢静脈エコー、D-dimer。初期治療として抗凝固薬（DOACなど）を投与し肺塞栓への進展を防ぐ。" }
-        ], qa: [], related: ["PTE"]
-      },
-      "PTE": {
-        title: "肺血栓塞栓症 (PTE)",
-        overview: "DVTなどを塞栓源とし、肺動脈が閉塞する疾患。急性右心不全と低酸素血症を来す。",
-        sections: [
-          { title: "診断", content: "造影CTによる肺動脈内の血栓証明。血行動態不安定な重症例では血栓溶解療法（t-PA）やPCPS補助下の外科的血栓摘除を考慮。" }
-        ], qa: [], related: ["DVT", "PH", "CardiogenicShock"]
-      },
-      "PH": {
-        title: "肺高血圧症 (PH)",
-        overview: "安静時の右心カテーテル検査で平均肺動脈圧(mPAP)≧20mmHgと定義される状態。",
-        sections: [
-          { title: "肺動脈性肺高血圧症(PAH)", content: "第1群。肺毛細血管楔入圧(PAWP)≦15mmHgかつ肺血管抵抗(PVR)≧3WU。PDE5阻害薬、エンドセリン受容体拮抗薬、プロスタサイクリン誘導体の併用療法が進歩している。" }
-        ], qa: [], related: ["HF", "PTE"]
-      },
-
-      // ==========================================
-      // 心膜疾患・先天性疾患(成人)
-      // ==========================================
-      "Pericarditis": {
-        title: "急性心膜炎",
-        overview: "特発性やウイルス感染などによる心膜の急性炎症。吸気時や体位変換で増悪する胸痛が特徴。",
-        sections: [
-          { title: "心電図所見", content: "多数の誘導で広範な上に凹のST上昇とPR低下を認める。AMIとの鑑別が重要。" },
-          { title: "治療", content: "NSAIDsとコルヒチンの投与が基本。" }
-        ], qa: [], related: ["Tamponade", "STEMI"]
-      },
-      "Tamponade": {
-        title: "心タンポナーデ",
-        overview: "心嚢液の急速な貯留により心臓の拡張が著しく制限され、心拍出量が低下するショック状態。",
-        sections: [
-          { title: "所見と治療", content: "Beckの三徴（血圧低下、静脈圧上昇、心音減弱）、奇脈、心エコーでの右室虚脱所見。緊急の心嚢穿刺または外科的ドレナージの絶対適応。" }
-        ], qa: [], related: ["Pericarditis", "AAD", "CardiogenicShock"]
-      },
-      "ASD": {
-        title: "心房中隔欠損症 (ASD)",
-        overview: "心房中隔に欠損孔が存在し、左房から右房への左右短絡（シャント）を生じる先天性疾患。",
-        sections: [
-          { title: "成人期の特徴", content: "聴診でII音の固定性分裂を認める。右心負荷から心房細動や右心不全を来す。肺体血流比(Qp/Qs) 1.5以上などで経カテーテル的閉鎖術や外科的閉鎖術の適応。" }
-        ], qa: [], related: ["HF", "AF"]
+    // 検索機能
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      searchResults.innerHTML = '';
+      if (!query) { searchResults.style.display = 'none'; return; }
+      
+      let matches = 0;
+      for (const [id, data] of Object.entries(db)) {
+        if (data.title.toLowerCase().includes(query) || (data.overview && data.overview.toLowerCase().includes(query))) {
+          const a = document.createElement('a');
+          a.href = `#${id}`;
+          a.className = 'search-item';
+          a.textContent = data.title;
+          a.onclick = () => { searchInput.value = ''; searchResults.style.display = 'none'; };
+          searchResults.appendChild(a);
+          matches++;
+        }
       }
-            ,
-      // ==========================================
-      // 呼吸器トップ・一覧メニュー
-      // ==========================================
-      "Pulmonology": {
-        title: "呼吸器",
-        html: `
-          <div class="nav-bar"><a href="#home" class="back-btn">← トップへ戻る</a><span class="breadcrumb">ホーム > 呼吸器</span></div>
-          <h1>呼吸器</h1>
-          <div class="menu-grid">
-            <a href="#LungCancer" class="menu-btn">肺癌</a>
-            <a href="#MPM" class="menu-btn">悪性胸膜中皮腫</a>
-            <a href="#Thymoma" class="menu-btn">胸腺腫</a>
-            <a href="#COPD"
+      searchResults.style.display = matches > 0 ? 'block' : 'none';
+    });
+
+    // 画面描画ルーター
+    function renderApp() {
+      const hash = window.location.hash.replace('#', '');
+      const appDiv = document.getElementById('app');
+      window.scrollTo(0, 0);
+
+      // トップページ
+      if (!hash || hash === 'home') {
+        let html = `<h1>診療科・カテゴリ</h1><div class="menu-grid">`;
+        Object.keys(categoryMap).forEach(cat => {
+          html += `<a href="#category-${encodeURIComponent(cat)}" class="category-title-btn">【${cat}】</a>`;
+        });
+        html += `</div>`;
+        appDiv.innerHTML = html;
+        return;
+      }
+
+      // カテゴリ別疾患一覧
+      if (hash.startsWith('category-')) {
+        const cat = decodeURIComponent(hash.replace('category-', ''));
+        let html = `<div class="nav-bar"><a href="#home" class="back-btn">← トップへ</a><span class="breadcrumb">ホーム > ${cat}</span></div>`;
+        html += `<h1>${cat}</h1><div class="menu-grid">`;
+        if (categoryMap[cat]) {
+          categoryMap[cat].forEach(id => {
+            html += `<a href="#${id}" class="menu-btn">${db[id].title}</a>`;
+          });
+        }
+        html += `</div>`;
+        appDiv.innerHTML = html;
+        return;
+      }
+
+      // 疾患詳細ページ
+      const data = db[hash];
+      if (!data) {
+        appDiv.innerHTML = `<h1>404 Not Found</h1><p>ページが見つかりません。</p><a href="#home" class="back-btn">トップへ戻る</a>`;
+        return;
+      }
+
+      // 1. ナビゲーション
+      let html = `<div class="nav-bar">
+                    <a href="javascript:history.back()" class="back-btn">← 戻る</a>
+                    <span class="breadcrumb"><a href="#home">ホーム</a> > <a href="#category-${encodeURIComponent(data.category)}">${data.category}</a></span>
+                  </div>
+                  <h1>${data.title}</h1>`;
+
+      // 2. フローチャート自動生成
+      if (data.flowchart && data.flowchart.length > 0) {
+        html += `<h2>フローチャート</h2><div class="flow-container">`;
+        data.flowchart.forEach((step, idx) => {
+          if (idx > 0) html += `<div class="flow-arrow">↓</div>`;
+          if (step.link) {
+            html += `<a href="#${step.link}" class="flow-box">${step.label}</a>`;
+          } else {
+            html += `<div class="flow-text">${step.label}</div>`;
+          }
+        });
+        html += `</div>`;
+      }
+
+      // 3. ページテンプレート自動生成
+      sectionTemplates.forEach(sec => {
+        if (data[sec.key]) {
+          html += `<h2>${sec.title}</h2><p>${data[sec.key].replace(/\n/g, '<br>')}</p>`;
+        }
+      });
+
+      // 4. 口頭試問
+      if (data.oralQuestions && data.oralQuestions.length > 0) {
+        html += `<h2>研修医口頭試問</h2>`;
+        data.oralQuestions.forEach(qa => {
+          html += `<div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q. ${qa.q}</div><div class="qa-a">${qa.a}</div></div>`;
+        });
+      }
+
+      // 5. 関連項目（自動リンク生成）
+      if (data.links && data.links.length > 0) {
+        html += `<h2>関連項目</h2><div class="related-tags">`;
+        data.links.forEach(linkId => {
+          const target = db[linkId];
+          if (target) {
+            html += `<a href="#${linkId}" class="related-tag">${target.title}</a>`;
+          } else {
+            // 未登録のリンク先でもエラーにせずIDを表示
+            html += `<a href="#${linkId}" class="related-tag">${linkId}</a>`;
+          }
+        });
+        html += `</div>`;
+      }
+
+      appDiv.innerHTML = html;
+    }
+
+    // ハッシュ変更監視
+    window.addEventListener('hashchange', renderApp);
+    window.addEventListener('DOMContentLoaded', renderApp);
+
+
+    // ==================================================
+    // 2. MEDICAL CONTENT (医学コンテンツ)
+    // ==================================================
+    // ここから下に医学コンテンツを追加してください。
+    // 登録の順序は問いません。カテゴリも自動生成されます。
+    // ==================================================
+
+    addMedicalContent({
+      id: "acs",
+      category: "循環器",
+      title: "急性冠症候群 (ACS)",
+      overview: "プラークの破綻やびらんにより冠動脈内に血栓が形成され、急激な心筋虚血を来す疾患群。<a href='#stemi' class='wiki-link'>STEMI</a>、<a href='#nstemi' class='wiki-link'>NSTEMI</a>、不安定狭心症(UA)を含む。",
+      pathophysiology: "アテローム硬化巣の破綻により血小板凝集と凝固カスケードが活性化し、血栓が形成される。",
+      diagnosis: "①典型的な胸痛、②12誘導ECGの虚血性変化、③高感度トロポニンの上昇。",
+      oralQuestions: [
+        { q: "ACSを疑った場合、最初に何を行う？", a: "10分以内の12誘導ECG取得、バイタルサインの確認、酸素投与（SpO2<90%）。" }
+      ],
+      links: ["stemi", "nstemi", "pci"]
+    });
+
+    addMedicalContent({
+      id: "stemi",
+      category: "循環器",
+      title: "STEMI (ST上昇型心筋梗塞)",
+      flowchart: [
+        { label: "胸痛・胸部症状", link: null },
+        { label: "12誘導ECG (10分以内)", link: null },
+        { label: "ST上昇あり", link: null },
+        { label: "STEMI確定診断", link: "stemi" },
+        { label: "Primary PCI (90分以内)", link: "pci" }
+      ],
+      definition: "冠動脈の完全閉塞により貫壁性の心筋壊死を生じる状態。",
+      treatment: "診断から90分以内のPrimary PCIが第一選択。抗血小板薬（DAPT）と抗凝固療法を併用。",
+      importantPoints: "時間が心筋を救う（Time is Muscle）。",
+      links: ["acs", "pci"]
+    });
+
+    addMedicalContent({
+      id: "pci",
+      category: "循環器",
+      title: "経皮的冠動脈インターベンション (PCI)",
+      overview: "カテーテルを用いて冠動脈の狭窄・閉塞病変を拡張・再開通させる治療法。",
+      links: ["stemi", "acs"]
+    });
+
+    addMedicalContent({
+      id: "lung-cancer",
+      category: "呼吸器",
+      title: "肺癌",
+      flowchart: [
+        { label: "肺結節", link: null },
+        { label: "胸部CT", link: "chest-ct" },
+        { label: "PET/CT", link: "pet-ct" },
+        { label: "気管支鏡・生検", link: "bronchoscopy" },
+        { label: "病理診断", link: null },
+        { label: "治療方針決定", link: null }
+      ],
+      definition: "肺の気管支や肺胞の細胞が癌化した悪性腫瘍。小細胞肺癌と非小細胞肺癌に大別される。",
+      diagnosis: "胸部X線、胸部CT、気管支鏡検査を用いた病理診断。",
+      treatment: "外科的切除、放射線療法、薬物療法（細胞障害性抗癌薬、分子標的薬、免疫チェックポイント阻害薬）。",
+      links: ["chest-ct", "pet-ct", "bronchoscopy"]
+    });
+
+    addMedicalContent({
+      id: "chest-ct",
+      category: "呼吸器",
+      title: "胸部CT",
+      overview: "X線を用いて肺や縦隔の断層画像を撮影する検査。微小な肺結節の検出に優れる。",
+      links: ["lung-cancer"]
+    });
+
+    // ==================================================
+    // 今後、Geminiが生成した addMedicalContent({ ... }) を
+    // ここの一番下にそのまま貼り付けてください。
+    // ==================================================
+
+  </script>
+</body>
+</html>
