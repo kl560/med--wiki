@@ -304,6 +304,531 @@
       overview: "X線を用いて肺や縦隔の断層画像を撮影する検査。微小な肺結節の検出に優れる。",
       links: ["lung-cancer"]
     });
+    // ==================================================
+    // 循環器領域（大幅拡充・更新版）
+    // ==================================================
+    
+    // 1. 虚血性心疾患・冠動脈インターベンション・心臓外科
+    addMedicalContent({
+      id: "acs",
+      category: "循環器",
+      title: "急性冠症候群 (ACS)",
+      overview: "冠動脈内プラークの破綻・びらんにより血栓が形成され、急激な心筋虚血を来す疾患群。<a href='#stemi' class='wiki-link'>STEMI</a>、<a href='#nstemi' class='wiki-link'>NSTEMI</a>、不安定狭心症(UA)を含む。",
+      pathophysiology: "アテローム硬化巣の破綻により内皮下組織が血流に曝露。血小板凝集と凝固カスケードが活性化し、白色血栓（血小板主体）から赤色血栓（フィブリン主体）へと進展する。Type 1 MIに分類される。",
+      diagnosis: "①典型的な安静時胸痛（20分以上持続）、②10分以内の12誘導ECG取得（ST変化の評価）、③高感度心筋トロポニン(hs-cTn)の測定。",
+      severity: "Killip分類（肺うっ血の程度による心不全評価）および、NSTEMIにおけるGRACEリスクスコアを用いた早期侵襲的戦略の層別化が重要。",
+      treatment: "抗血小板薬（アスピリン＋P2Y12阻害薬のDAPT）、抗凝固薬（未分画ヘパリン等）。早期の冠動脈造影(CAG)および血行再建（<a href='#pci' class='wiki-link'>PCI</a>または<a href='#cabg' class='wiki-link'>CABG</a>）。",
+      importantPoints: "近年は出血リスク（ARC-HBR等）を評価し、DAPT期間の短縮（1〜3ヶ月）後にP2Y12阻害薬単剤へ移行するSAPT de-escalation戦略が注目されている（ESC 2023 ACS Guidelines）。",
+      links: ["stemi", "nstemi", "pci", "cabg", "cardiogenic-shock"]
+    });
+
+    addMedicalContent({
+      id: "stemi",
+      category: "循環器",
+      title: "STEMI (ST上昇型心筋梗塞)",
+      flowchart: [
+        { label: "突然の激しい胸痛", link: null },
+        { label: "12誘導ECG (FMCから10分以内)", link: null },
+        { label: "2つ以上の連続する誘導で新出ST上昇/LBBB", link: null },
+        { label: "STEMI確定診断", link: "stemi" },
+        { label: "Primary PCI (FMCから90分以内)", link: "pci" }
+      ],
+      diagnosisCriteria: "隣り合う2つ以上の誘導でのST上昇（V2-V3では男性≧0.2mV, 女性≧0.15mV、その他の誘導では≧0.1mV）、または新規発症の左脚ブロック(LBBB)。",
+      treatment: "第一選択はPrimary PCI。FMC(最初の医療接触)からワイヤー通過まで90分以内（ESC 2023ではPCIセンター到着から60分以内）が目標。",
+      surgery: "機械的合併症（心室中隔穿孔[VSP]、乳頭筋断裂による重症MR、左室自由壁破裂）を合併した場合は、機械的補助循環（IABP/Impella/VA-ECMO）を導入し、緊急外科手術（パッチ閉鎖術、MVR、縫合術）の絶対適応。",
+      oralQuestions: [
+        { q: "右室梗塞を疑う心電図変化と禁忌薬は？", a: "下壁梗塞（II, III, aVFのST上昇）に合併しやすく、V4R等の右側胸部誘導でST上昇。前負荷依存状態となるため、硝酸薬や利尿薬は血圧低下を招き禁忌。初期対応は細胞外液の負荷。" }
+      ],
+      links: ["acs", "pci", "cabg", "cardiogenic-shock"]
+    });
+
+    addMedicalContent({
+      id: "nstemi",
+      category: "循環器",
+      title: "NSTEMI / 不安定狭心症",
+      overview: "ST上昇を伴わないが、心筋バイオマーカー（hs-cTn）の上昇を伴う心筋虚血（NSTEMI）、またはバイオマーカー上昇を伴わない切迫した虚血（UA）。",
+      diagnosis: "ESC 2023ガイドラインが推奨する「0/1時間」または「0/2時間」hs-cTnアルゴリズムによる迅速なRule-in / Rule-outが標準。",
+      treatment: "リスク層別化に基づく侵襲的戦略のタイミング決定。①超高リスク（血行動態不安定、難治性胸痛、致死性不整脈）：2時間以内の緊急CAG、②高リスク（GRACEスコア>140、hs-cTn動態あり、ST-T変化）：24時間以内の早期CAG。",
+      links: ["acs", "stemi", "pci"]
+    });
+
+    addMedicalContent({
+      id: "pci",
+      category: "循環器",
+      title: "経皮的冠動脈インターベンション (PCI)",
+      overview: "カテーテルを用いて冠動脈狭窄部を拡張・ステント留置し、血流を再開通させる手技。現在は第2世代以降の薬剤溶出性ステント(DES)が主流。",
+      initialTests: "慢性冠症候群(CCS)に対する適応決定には、冠血流予備量比(FFR)≦0.80、または瞬時無血流比(iFR)≦0.89などの機能的虚血評価が必須。",
+      treatment: "手技中の抗凝固療法（ヘパリン）。石灰化病変に対するロータブレーターやOAS(Orbital Atherectomy System)、IVL(血管内砕石術)の併用。血管内イメージング（IVUS/OCT）ガイド下でのステント最適化。",
+      links: ["acs", "cabg"]
+    });
+
+    addMedicalContent({
+      id: "cabg",
+      category: "循環器",
+      title: "冠動脈バイパス術 (CABG)",
+      overview: "冠動脈の高度狭窄病変に対し、自己血管を用いて末梢側へバイパスを作製する血行再建術。人工心肺を使用するONCABと、使用しないOPCABがある。",
+      treatment: "【適応】左主幹部(LMT)病変、3枝病変、特に糖尿病合併例やSYNTAXスコア高値(≧23)の複雑病変ではPCIよりもCABGが予後（生存率向上、再血行再建回避）の観点で優れる（FAME 3試験等）。",
+      surgery: "グラフト選択：左前下行枝(LAD)への左内胸動脈(LITA)吻合は長期開存率が高く必須。他枝へは右内胸動脈(RITA)、橈骨動脈(RA)、大伏在静脈(SVG)を使用。近年は両側内胸動脈(BITA)やMICS-CABG（低侵襲心臓手術）も増加。",
+      links: ["pci", "stemi"]
+    });
+
+    // 2. 循環管理・心不全・ショック
+    addMedicalContent({
+      id: "heart-failure",
+      category: "循環器",
+      title: "心不全 (Heart Failure)",
+      overview: "心筋障害等により心機能が低下し、末梢臓器の酸素需要に見合う血流を拍出できない、あるいは拡張不全により静脈圧が上昇する症候群。",
+      diagnosis: "LVEFによる分類：HFrEF(≦40%), HFmrEF(41-49%), HFpEF(≧50%)。急性心不全の血行動態評価にはNohria-Stevenson分類（クリニカルシナリオ[CS]）が有用（うっ血の有無[Wet/Dry]と末梢循環不全の有無[Cold/Warm]）。",
+      medication: "【HFrEF】Fantastic Four（ARNI / ACE阻害薬、β遮断薬、MRA、SGLT2阻害薬）の早期並行導入と最大忍容量へのUp-titrationが基本。<br>【HFpEF】SGLT2阻害薬（エンパグリフロジン、ダパグリフロジン）が予後改善効果を示しクラスI推奨。",
+      surgery: "GDMT抵抗性の重症HFrEFには、CRT（心臓再同期療法）、左室補助人工心臓(LVAD: HeartMate 3等)の植込み、最終的に心臓移植を適応評価する（日本循環器学会 心不全ガイドライン）。",
+      links: ["cardiogenic-shock", "valvular-disease"]
+    });
+
+    addMedicalContent({
+      id: "cardiogenic-shock",
+      category: "循環器",
+      title: "心原性ショック / 機械的補助循環",
+      flowchart: [
+        { label: "心拍出量低下・組織低灌流", link: null },
+        { label: "強心薬・昇圧薬（ノルアドレナリン、ドブタミン等）", link: null },
+        { label: "血行動態の維持困難 (SCAI Shock Stage C-E)", link: null },
+        { label: "IABP / Impella / VA-ECMO の導入", link: "cardiogenic-shock" }
+      ],
+      pathophysiology: "急性心筋梗塞、劇症型心筋炎、重症心不全の急性増悪等により高度のポンプ不全に陥った状態。",
+      surgery: "【機械的補助循環 (MCS)】<br>①IABP：大動脈内バルーンパンピング。後負荷軽減と冠血流増加。<br>②VA-ECMO (PCPS)：静脈脱血・動脈送血により強力な全身循環補助と酸素化。しかし左室後負荷は増大する。<br>③Impella：経皮的カテーテルポンプ。左室から上行大動脈へ直接血液を汲み出し、強力な左室アンローディング（前負荷軽減）を行う。<br>※VA-ECMOによる左室負荷をImpellaで軽減する「ECPELLA（エクペラ）」が重症例で救命率を向上させている。",
+      importantPoints: "MCSの導入は不可逆的臓器障害（多臓器不全、重症脳障害）が進行する前に、早期にハートチームで決定する。",
+      links: ["stemi", "heart-failure"]
+    });
+
+    // 3. 弁膜症
+    addMedicalContent({
+      id: "as",
+      category: "循環器",
+      title: "大動脈弁狭窄症 (AS)",
+      overview: "加齢に伴う弁尖の石灰化（または先天性二尖弁）により大動脈弁の開放が制限され、左室に著しい圧負荷を来す疾患。",
+      symptoms: "3大症状（狭心痛、失神、心不全）。有症状化後の平均余命はそれぞれ5年、3年、2年と極めて予後不良。",
+      diagnosisCriteria: "心エコー：最大血流速度(Vmax)≧4.0 m/s、平均圧較差(mPG)≧40 mmHg、弁口面積(AVA)≦1.0 cm²（Severe AS）。",
+      surgery: "有症状のSevere ASは全例介入適応。無症状でもLVEF<50%や超重症(Vmax≧5.0 m/s)は早期介入。<br>【SAVR vs TAVI】（JCS 2020/2025 Focus Update）<br>・75歳未満：外科的大動脈弁置換術(SAVR)が基本。<br>・80歳以上：経カテーテル大動脈弁留置術(TAVI)を推奨。<br>・75〜79歳：解剖学的リスクやフレイルをハートチームで評価し決定。",
+      links: ["heart-failure", "mr"]
+    });
+
+    addMedicalContent({
+      id: "mr",
+      category: "循環器",
+      title: "僧帽弁閉鎖不全症 (MR)",
+      overview: "収縮期に左室から左房へ血液が逆流する疾患。弁・腱索の器質的異常による一次性(Primary MR: 逸脱症等)と、左室・左房の拡大による二次性(Secondary/Functional MR)に大別。",
+      surgery: "【一次性MR】早期の手術適応。自己弁を温存する僧帽弁形成術(MVP)がMVR（置換術）より推奨される。<br>【二次性MR】心不全に対するGDMTが優先。GDMT抵抗性の有症状例に対し、経カテーテル僧帽弁縁端接合術(TEER: MitraClip)が第一選択として考慮される（COAPT試験に基づく）。",
+      links: ["heart-failure", "af", "as"]
+    });
+
+    addMedicalContent({
+      id: "ie",
+      category: "循環器",
+      title: "感染性心内膜炎 (IE)",
+      overview: "心臓弁や心内膜に細菌等が感染し、疣贅（vegetation）を形成。敗血症および塞栓症、弁破壊による急性心不全を来す。",
+      diagnosisCriteria: "修正Duke基準（血液培養陽性と心エコーでの疣贅確認が大基準）。経験的抗菌薬投与前に必ず複数セットの血液培養を採取。",
+      surgery: "心不全のコントロール不良、抗菌薬抵抗性の感染継続、10mm以上の可動性疣贅による塞栓リスク高値などの場合、感染コントロールを待たずに早期の弁切除・人工弁置換術(MVR/AVR)を行う。",
+      links: ["as", "mr", "heart-failure"]
+    });
+
+    // 4. 大動脈疾患
+    addMedicalContent({
+      id: "aad",
+      category: "循環器",
+      title: "急性大動脈解離 (AAD)",
+      overview: "大動脈内膜に亀裂(Entry)が入り、血流が中膜を解離して偽腔を形成する致死性疾患。",
+      diagnosis: "造影CTによる解離腔・フラップの確認。<br>【Stanford A型】上行大動脈に解離が及ぶもの。心タンポナーデ、冠動脈解離（AMI発症）、大動脈弁閉鎖不全(AR)を合併しやすい。<br>【Stanford B型】上行大動脈に及ばないもの。",
+      surgery: "・A型：緊急人工血管置換術の絶対適応（大動脈基部置換や弓部全置換）。<br>・B型：降圧・鎮痛（収縮期血圧100-120mmHg目標）による保存的加療が基本。ただし臓器虚血（腸管、腎臓、下肢）、破裂切迫、持続する疼痛を伴うComplicated B型には、胸部大動脈ステントグラフト内挿術(TEVAR)を施行する（JCS 大動脈瘤・大動脈解離診療ガイドライン）。",
+      links: ["aaa"]
+    });
+
+    // 5. 不整脈
+    addMedicalContent({
+      id: "af",
+      category: "循環器",
+      title: "心房細動 (AF)",
+      overview: "心房が不規則かつ高頻度に細かく震える状態。心原性脳塞栓症と心不全の最大のリスク因子。",
+      treatment: "①抗凝固療法：CHADS2スコア（またはCHA2DS2-VAScスコア）で脳梗塞リスクを評価。1点以上でDOAC（直接作用型経口抗凝固薬）を考慮、2点以上で推奨。<br>②リズムコントロール：近年、早期のカテーテルアブレーション（肺静脈隔離術: PVI）による洞調律維持が、薬物療法より予後・QOL改善に優れるとされ強く推奨される（EAST-AFNET4試験等）。",
+      surgery: "心臓外科手術（CABGや弁膜症手術）を施行する際、AF合併例にはメイズ(Maze)手術または左心耳閉鎖術を同時施行することが脳梗塞予防の観点から推奨される。",
+      links: ["heart-failure", "ischemic-stroke"]
+    });
+    // ==================================================
+    // リスク評価スコア・指標（各疾患からリンク参照用）
+    // ==================================================
+    addMedicalContent({
+      id: "grace-score",
+      category: "循環器",
+      title: "GRACEリスクスコア",
+      overview: "NSTEMIおよび不安定狭心症(UA)患者における、入院中および退院後6ヶ月の死亡・心筋梗塞リスクを予測するスコアリングシステム。",
+      diagnosisCriteria: "評価項目：年齢、心拍数、収縮期血圧、血清クレアチニン、心不全の程度(Killip分類)、入院時の心停止、ST部分の偏位、心筋バイオマーカーの上昇。",
+      severity: "140点以上を高リスクとし、24時間以内の早期侵襲的戦略（早期CAG）の適応基準の1つとなる（ESC 2023 ACS Guidelines）。",
+      links: ["nstemi", "acs"]
+    });
+
+    addMedicalContent({
+      id: "arc-hbr",
+      category: "循環器",
+      title: "ARC-HBR (出血高リスク基準)",
+      overview: "PCI施行患者における出血リスクを評価する国際基準（Academic Research Consortium - High Bleeding Risk）。",
+      diagnosisCriteria: "【大基準】1つでも満たせばHBR：長期抗凝固療法、重度腎機能障害(eGFR<30)、中等度〜重度の貧血(Hb<11)、血小板減少(<10万)、最近の出血歴、脳出血歴など。<br>【小基準】2つ満たせばHBR：高齢(≧75歳)、中等度腎機能障害(eGFR 30-59)など。",
+      treatment: "HBRに該当する場合、DAPT期間を1〜3ヶ月に短縮し、その後P2Y12阻害薬などの単剤(SAPT)へ移行する戦略が推奨される。",
+      links: ["pci", "acs", "af"]
+    });
+
+    addMedicalContent({
+      id: "syntax-score",
+      category: "循環器",
+      title: "SYNTAXスコア",
+      overview: "冠動脈の解剖学的複雑性を定量化するスコア。左主幹部(LMT)病変や多枝病変における血行再建（PCI vs CABG）の適応決定に用いる。",
+      severity: "・低スコア (≦22): PCIまたはCABG。<br>・中スコア (23-32): CABGが望ましい（糖尿病合併例では特にCABG推奨）。<br>・高スコア (≧33): CABGが強く推奨される。",
+      importantPoints: "近年は臨床背景（年齢、LVEF、Cr等）を加味したSYNTAX Score II 2020が、より精緻な予後予測ツールとして活用されている。",
+      links: ["cabg", "pci"]
+    });
+
+    addMedicalContent({
+      id: "chads2",
+      category: "循環器",
+      title: "CHADS2 / CHA2DS2-VASc スコア",
+      overview: "非弁膜症性心房細動における心原性脳塞栓症の発症リスク評価スコア。",
+      diagnosisCriteria: "【CHADS2】Congestive heart failure(心不全:1点), Hypertension(高血圧:1点), Age(≧75歳:1点), Diabetes(糖尿病:1点), Stroke/TIA(脳卒中歴:2点)。<br>※日本では独自の「HELT-E2S2スコア」も近年提唱されている（JCS 2024 不整脈フォーカスアップデート）。",
+      treatment: "1点以上でDOAC等による抗凝固療法を考慮、2点以上で強く推奨。",
+      links: ["af", "ischemic-stroke"]
+    });
+
+    addMedicalContent({
+      id: "sofa-score",
+      category: "感染症",
+      title: "SOFAスコア",
+      overview: "敗血症における臓器障害の程度を評価するスコア（Sequential Organ Failure Assessment）。",
+      diagnosisCriteria: "呼吸（P/F比）、凝固（血小板数）、肝臓（ビリルビン）、循環（血圧・カテコールアミン投与量）、中枢神経（GCS）、腎臓（クレアチニン・尿量）の6項目を各0〜4点で評価。感染症疑い＋SOFAスコアの急激な2点以上の上昇で「敗血症」と診断する。",
+      links: ["sepsis"]
+    });
+
+    // ==================================================
+    // 血管外科・循環器（追加疾患）
+    // ==================================================
+    addMedicalContent({
+      id: "pad",
+      category: "循環器",
+      title: "末梢動脈疾患 (PAD) / CLTI",
+      overview: "下肢動脈の動脈硬化性狭窄・閉塞により虚血を来す疾患。重症化すると包括的高度慢性下肢虚血(CLTI)に至る。",
+      diagnosis: "足関節上腕血圧比(ABI)≦0.9で疑い、エコー、造影CT、MRAで病変を評価。",
+      severity: "Fontaine分類（I度:無症状, II度:間欠性跛行, III度:安静時痛, IV度:潰瘍・壊死）。III・IV度がCLTIに相当。",
+      treatment: "【II度】抗血小板薬（シロスタゾール等）、監視下運動療法。<br>【CLTI】直ちに血行再建が必要。病変の解剖学的条件（WIfI分類等）を考慮し、血管内治療(EVT)またはバイパス術（自家静脈グラフトが第一選択）を施行する。創傷治療を含めたフットケアチームの介入が必須。",
+      links: ["aaa", "acs"]
+    });
+
+    addMedicalContent({
+      id: "pte",
+      category: "呼吸器",
+      title: "肺血栓塞栓症 (PTE)",
+      flowchart: [
+        { label: "突然の呼吸困難・胸痛", link: null },
+        { label: "バイタルサイン確認・D-dimer測定・心エコー", link: null },
+        { label: "造影CT (肺動脈内の血栓確認)", link: "chest-ct" },
+        { label: "血行動態の評価", link: null },
+        { label: "安定：DOAC等による抗凝固療法", link: null },
+        { label: "不安定(ショック)：PCPS導入・血栓溶解/摘除", link: "cardiogenic-shock" }
+      ],
+      pathophysiology: "深部静脈血栓症(DVT)を主な塞栓源とし、肺動脈が急激に閉塞。右室の後負荷増大により急性右心不全・閉塞性ショックを来す。",
+      treatment: "抗凝固療法（未分画ヘパリン、DOAC）。血行動態が破綻する重症例（広範型）では、VA-ECMO(PCPS)による循環補助下で、t-PA静注または外科的/カテーテル的血栓摘除術を施行する。",
+      links: ["dvt", "cardiogenic-shock", "heart-failure"]
+    });
+
+    addMedicalContent({
+      id: "dvt",
+      category: "循環器",
+      title: "深部静脈血栓症 (DVT)",
+      overview: "下肢や骨盤内の深部静脈に血栓が形成される病態。Virchowの三徴（血流鬱滞、血管内皮障害、血液凝固能亢進）が関与。",
+      diagnosis: "下肢の腫脹・疼痛。下肢静脈エコーにて血栓・圧排不能所見の確認。D-dimer上昇。",
+      treatment: "急性期からの抗凝固療法（リバーロキサバン、エドキサバン、アピキサバンなどDOACが主流）。抗凝固薬が禁忌でPTEリスクが高い場合は下大静脈フィルター(IVCF)を検討。",
+      links: ["pte"]
+    });
+
+    // ==================================================
+    // 集中治療・感染症
+    // ==================================================
+    addMedicalContent({
+      id: "sepsis",
+      category: "感染症",
+      title: "敗血症 (Sepsis) / 敗血症性ショック",
+      overview: "感染に対する宿主の制御不能な反応に起因する、生命を脅かす臓器障害（Sepsis-3定義）。",
+      diagnosisCriteria: "感染症の疑い ＋ SOFAスコアのベースラインからの2点以上増加。",
+      treatment: "【敗血症性ショック】十分な初期輸液（細胞外液）を行っても平均血圧≧65mmHgを維持するために血管収縮薬（ノルアドレナリンが第一選択）を要し、かつ血清乳酸値>2mmol/L(18mg/dL)の状態。<br>1時間以内の広域抗菌薬静注、迅速な感染源コントロール（ドレナージ等）が予後を左右する（日本版敗血症診療ガイドライン）。",
+      links: ["sofa-score", "aki"]
+    });
+
+    // ==================================================
+    // 腎臓・代謝（追加疾患）
+    // ==================================================
+    addMedicalContent({
+      id: "aki",
+      category: "腎臓",
+      title: "急性腎障害 (AKI)",
+      overview: "数時間から数週間の経過で急激に腎機能が低下する病態。",
+      diagnosisCriteria: "KDIGO分類：①48時間以内に血清クレアチニン(sCr)≧0.3mg/dLの上昇、②7日以内にsCrが基礎値の1.5倍以上に上昇、③尿量<0.5mL/kg/hrが6時間以上持続、のいずれか。",
+      treatment: "腎前性（脱水、ショック等）、腎性（尿細管壊死、間質性腎炎等）、腎後性（尿路閉塞）の鑑別。被疑薬の中止、体液量の適正化、ショックの離脱。重症例（高K血症、溢水、高度アシドーシス）では持続的腎代替療法(CRRT)等を導入。",
+      links: ["sepsis", "ckd", "heart-failure"]
+    });
+
+    // ==================================================
+    // 不整脈・心筋疾患（追加疾患）
+    // ==================================================
+    addMedicalContent({
+      id: "vt",
+      category: "循環器",
+      title: "心室頻拍 (VT)",
+      overview: "心室由来の幅の広いQRS波（≧120ms）が3連発以上持続する頻脈。血行動態が破綻しやすい。",
+      treatment: "【急性期】血行動態不安定（意識障害、血圧低下）な場合は直ちに同期下カルディオバージョン（電気的除細動）。安定していればアミオダロン静注等。<br>【慢性期】陳旧性心筋梗塞など器質的心疾患に伴うVTは突然死リスクが高く、植込型除細動器(ICD)の絶対適応。頻回作動例にはカテーテルアブレーション。",
+      links: ["vf", "acs", "stemi"]
+    });
+
+    addMedicalContent({
+      id: "vf",
+      category: "循環器",
+      title: "心室細動 (VF)",
+      overview: "心室が完全に無秩序に興奮・痙攣し、心拍出量がゼロとなる致死性不整脈。",
+      treatment: "発見次第、胸骨圧迫(CPR)と除細動器（AEDまたはマニュアル）による非同期の電気的除細動を直ちに実施。蘇生後の二次予防として全例にICD植込みが適応。",
+      links: ["vt", "stemi"]
+    });
+    // ==================================================
+    // 循環器領域（追加・完全拡充データ）
+    // ==================================================
+
+    // 1. 弁膜症・心膜疾患
+    addMedicalContent({
+      id: "ar",
+      category: "循環器",
+      title: "大動脈弁閉鎖不全症 (AR)",
+      overview: "拡張期に大動脈から左室へ血液が逆流する病態。左室の容量負荷および圧負荷を招く。",
+      pathophysiology: "大動脈弁自体の変性・破壊（IEや二尖弁）または大動脈基部拡大（AAE、大動脈解離等）が原因。急性ARでは左室順応性が低いため急性左心不全・ショックを来す。",
+      symptoms: "心不全症状（労作時息切れ）、大血管の脈圧増大（水槌脈、Quincke脈等）。",
+      diagnosisCriteria: "心エコー：逆流噴流幅、逆流容積(RV)≧60mL/beat、有効逆流弁口面積(EROA)≧0.30cm²で重症(Severe AR)。",
+      surgery: "有症状の重症ARは手術適応。無症状でもLVEF≦50%または左室収縮末期径(LVESD)>50mm（またはLVESD index>25mm/m²）で弁形成術または大動脈弁置換術(AVR)を行う（JCS 2020弁膜症ガイドライン）。",
+      links: ["as", "bentall", "heart-failure", "ie"]
+    });
+
+    addMedicalContent({
+      id: "ms",
+      category: "循環器",
+      title: "僧帽弁狭窄症 (MS)",
+      overview: "僧帽弁口の狭窄により左房から左室への血液流入が障害される疾患。原因の多くはリウマチ熱後遺症。",
+      pathophysiology: "左房圧上昇に伴い左房拡大・肺うっ血・右心不全を生じる。左房拡大から高率に<a href='#af' class='wiki-link'>心房細動(AF)</a>を合併する。",
+      diagnosisCriteria: "心エコー：弁口面積(MVA)≦1.5cm²（重症は≦1.0cm²）、平均圧較差(mPG)上昇。",
+      treatment: "心房細動合併例や脳塞栓リスク例ではワルファリンによる抗凝固療法（DOACは弁膜症性AFに対し適応外または慎重投与）。有症状例には経皮的僧帽弁交連切開術(PTMC)または外科的弁置換術(MVR)。",
+      links: ["mr", "af", "heart-failure"]
+    });
+
+    addMedicalContent({
+      id: "tr",
+      category: "循環器",
+      title: "三尖弁閉鎖不全症 (TR)",
+      overview: "収縮期に右室から右房へ血液が逆流する病態。多くは左心系疾患や肺高血圧に伴う二次性（機能性）TR。",
+      symptoms: "右心不全症状（下肢浮腫、肝腫大、頸静脈怒張、腹水）。",
+      surgery: "左心系弁膜症手術時に中等度以上の二次性TRを伴う場合、三尖弁形成術(TAP: Ring annuloplasty)の同時施行が推奨される。近年は経カテーテル三尖弁修復術(TTVR)の開発が進んでいる。",
+      links: ["mr", "ph", "heart-failure"]
+    });
+
+    addMedicalContent({
+      id: "pericarditis",
+      category: "循環器",
+      title: "急性心膜炎 / 心タンポナーデ",
+      flowchart: [
+        { label: "体位変換・吸気で増悪する胸痛", link: null },
+        { label: "12誘導ECG (広範な誘導での上向き凹のST上昇・PR低下)", link: null },
+        { label: "心エコー (心嚢液貯留・右室虚脱所見の確認)", link: null },
+        { label: "Beckの三徴 / 奇脈を認めるか？", link: null },
+        { label: "YES: 心タンポナーデ → 緊急心嚢穿刺 / ドレナージ", link: "pericarditis" },
+        { label: "NO: 抗炎症療法 (NSAIDs + コルヒチン)", link: null }
+      ],
+      diagnosisCriteria: "Beckの三徴（血圧低下、静脈圧上昇[頸静脈怒張]、心音減弱）。吸気時に収縮期血圧が10mmHg以上低下する「奇脈」。",
+      treatment: "心タンポナーデを呈した場合は緊急心嚢穿刺(Pericardiocentesis)または心膜開窓術の絶対適応。炎症に対してはNSAIDsとコルヒチンが第一選択（ステロイドは再発率を高めるため第二選択）。",
+      links: ["aad", "stemi"]
+    });
+
+    addMedicalContent({
+      id: "constrictive-pericarditis",
+      category: "循環器",
+      title: "収縮性心膜炎",
+      overview: "心膜の慢性炎症・肥厚・石灰化により心臓の拡張が高度に障害される疾患。",
+      diagnosis: "心臓カテーテル検査で「dip and plateau」パターン（Square-root sign）を認め、左右心室の拡張末期圧が同期・均等化する。",
+      surgery: "内科的治療に抵抗性の場合は心膜剥離術(Pericardiectomy)が根本的治療となる。",
+      links: ["pericarditis", "heart-failure"]
+    });
+
+    // 2. 不整脈・伝導障害
+    addMedicalContent({
+      id: "psvt",
+      category: "循環器",
+      title: "発作性上室頻拍 (PSVT)",
+      overview: "突然発症・突然停止する規則的な狭いQRS（Narrow QRS）頻拍。房室結節回帰性頻拍(AVNRT)と房室回帰性頻拍(AVRT)が代表的。",
+      treatment: "【急性期】迷走神経刺激（Valsalva手技、頸動脈洞マッサージ）。無効時はアデノシン(ATP)急速静注。血行動態不安定時は電気的除細動。<br>【根治的治療】カテーテルアブレーション（Class I推奨）。",
+      links: ["wpw", "af"]
+    });
+
+    addMedicalContent({
+      id: "wpw",
+      category: "循環器",
+      title: "WPW症候群 (Wolff-Parkinson-White)",
+      overview: "房室間に正常伝導路以外の副伝導路（Kent束）が存在し、心室の早期興奮（デルタ波）を認める疾患。",
+      importantPoints: "WPW症候群に心房細動が合併した場合（偽性心室頻拍: 偽性VT）、Kent束を介した超頻脈から<a href='#vf' class='wiki-link'>心室細動(VF)</a>へ移行する危険がある。ジギタリスやCa拮抗薬は房室結節伝導を抑制しKent束伝導を亢進させるため禁忌。薬物治療はプロカインアミド静注、または直ちに電気的除細動を行う。",
+      links: ["psvt", "af", "vf"]
+    });
+
+    addMedicalContent({
+      id: "brugada",
+      category: "循環器",
+      title: "Brugada症候群",
+      overview: "右側胸部誘導(V1-V3)で特異的なST上昇（Coved型: Type 1）を認め、器質的心疾患のない青壮年男性の夜間突然死の原因となる不整脈症候群。ナトリウムチャネル遺伝子(SCN5A)変異などが関与。",
+      treatment: "心停止蘇生例や有症状（VT/VFによる失神歴）例には、突然死予防として植込型除細動器(ICD)の植込みがクラスI推奨。",
+      links: ["vf", "lqts"]
+    });
+
+    addMedicalContent({
+      id: "lqts",
+      category: "循環器",
+      title: "長QT症候群 (LQTS)",
+      overview: "心電図上でQT時間の延長を認め、多形性心室頻拍（Torsades de Pointes: TdP）から失神や突然死を来す疾患。先天性と薬剤性（二次性）がある。",
+      treatment: "【先天性】β遮断薬（ナドロール、プロプラノロール等）が第一選択。高リスク例にはICD。<br>【薬剤性】原因薬剤（抗不整脈薬、向精神薬、抗菌薬等）の中止、低K血症・低Mg血症の補正、硫酸マグネシウム静注。",
+      links: ["vf", "vt"]
+    });
+
+    addMedicalContent({
+      id: "av-block",
+      category: "循環器",
+      title: "房室ブロック (AV Block)",
+      overview: "心房から心室への興奮伝導が遅延または途絶する病態。",
+      severity: "・1度：PQ延長(>0.20秒)。<br>・2度 Mobitz I型(Wenckebach型)：PQが徐々に延長し脱落。<br>・2度 Mobitz II型：PQ延長なく突然脱落（高度ブロックへ移行のリスク高）。<br>・3度(完全房室ブロック)：心房と心室が完全に解離（P波とQRS波が独立）。",
+      treatment: "Mobitz II型および3度房室ブロック、あるいは有症状の徐脈に対しては、恒久式心臓ペースメーカー(PPM)植込みの絶対適応（JCS 不整脈非薬物治療ガイドライン）。",
+      links: ["sss", "cardiac-sarcoidosis"]
+    });
+
+    addMedicalContent({
+      id: "sss",
+      category: "循環器",
+      title: "洞不全症候群 (SSS)",
+      overview: "洞結節の自律能低下や洞房伝導障害により、著明な徐脈や洞停止、頻脈徐脈症候群（AF停止後の洞停止等）を呈する病態。",
+      symptoms: "脳低灌流によるめまい、立ちくらみ、失神（Adams-Stokes発作）、心不全症状。",
+      treatment: "症状を伴う徐脈に対してペースメーカー植込みを行う。",
+      links: ["av-block", "af"]
+    });
+
+    // 3. 心筋疾患・二次性心筋症
+    addMedicalContent({
+      id: "dcm",
+      category: "循環器",
+      title: "拡張型心筋症 (DCM)",
+      overview: "特発性または遺伝的要因により左室拡大と収縮能低下（LVEF低下）を来す心筋疾患。",
+      treatment: "HFrEFに対する標準的薬物療法(GDMT)を行う。難治例にはCRT-D（両心室ペーシング機能付きICD）、植込型補助人工心臓(VAD)の装着、心臓移植を検討。",
+      links: ["heart-failure", "hcm"]
+    });
+
+    addMedicalContent({
+      id: "hcm",
+      category: "循環器",
+      title: "肥大型心筋症 (HCM / HOCM)",
+      overview: "高血圧などの負荷なしに左室肥大（特に非対称性中隔肥大: ASH）を生じるサルコメア遺伝子疾患。左室流出路狭窄を伴うものを閉塞性(HOCM)と呼ぶ。",
+      treatment: "【HOCM】β遮断薬や非ジヒドロピリジン系Ca拮抗薬。近年は心筋ミオシン阻害薬（マバカムテン）が使用可能。内科的治療抵抗例にはPTSMA（経皮的血管内中隔心筋焼灼術）や外科的心筋切除術(Myectomy)。",
+      importantPoints: "若年アスリートの運動中突然死の主要原因。心室性不整脈リスクを評価しICD植込みを考慮する。",
+      links: ["dcm", "heart-failure"]
+    });
+
+    addMedicalContent({
+      id: "cardiac-amyloidosis",
+      category: "循環器",
+      title: "心アミロイドーシス",
+      overview: "アミロイド蛋白が心筋間質に沈着し、高度な拡張不全（HFpEF）や刺激伝導障害、不整脈を来す進行性疾患。",
+      diagnosis: "病型診断：①AL型（免疫グロブリンL鎖由来：血液内科で化学療法）、②ATTR型（トランスサイレチン由来：野生型[ATTRwt]および遺伝性[ATTRv]）。ピロリン酸シンチグラフィ(99mTc-PYP)でATTR型に強く集積する。",
+      treatment: "ATTR型心アミロイドーシスに対しては、アミロイド四量体構造を安定化させる「タファミジス（ビンダケル）」が予後および運動能改善薬として第一選択（JCS 心アミロイドーシス診療ガイドライン）。",
+      links: ["heart-failure", "av-block"]
+    });
+
+    addMedicalContent({
+      id: "cardiac-sarcoidosis",
+      category: "循環器",
+      title: "心サルコイドーシス",
+      overview: "全身性肉芽腫性疾患であるサルコイドーシスが心臓に病変を形成した状態。完全房室ブロック、致死性心室不整脈(VT/VF)、進行性心不全の原因となる。",
+      diagnosis: "18F-FDG PET/CTでの心筋局所集積、心臓MRI(LGE所見)、心筋生検での非乾酪性類上皮細胞肉芽腫の確認。",
+      treatment: "活動性炎症に対しては高容量副腎皮質ステロイド療法。致死性不整脈に対してICD植込みを積極的に検討。",
+      links: ["av-block", "vt", "heart-failure"]
+    });
+
+    addMedicalContent({
+      id: "takotsubo",
+      category: "循環器",
+      title: "たこつぼ心筋症 (Takotsubo)",
+      overview: "精神的・身体的ストレスを契機に、心尖部の収縮低下と心基部の過収縮を来し、左室造影で「たこつぼ」状を呈する一過性の心筋障害。",
+      diagnosis: "ACSと酷似する（ST上昇や心筋酵素の上昇）。冠動脈造影(CAG)で有意狭窄を認めないことで確定診断する。",
+      treatment: "多くの場合は数週間〜数ヶ月で可逆的に心機能が回復する。急性期の心不全・ショックや多形性VTに対する対症療法が中心。",
+      links: ["acs", "heart-failure"]
+    });
+
+    // 4. 大動脈・血管外科・先天性
+    addMedicalContent({
+      id: "taa",
+      category: "循環器",
+      title: "胸部大動脈瘤 (TAA)",
+      overview: "胸部大動脈が正常径の1.5倍以上に拡大した状態。破裂するまで無症状であることが多い。",
+      surgery: "【手術適応】長径≧55mm（Marfan症候群等では≧45-50mm）、または拡大速度>5mm/年で手技を考慮。<br>・上行/弓部：外科的人工血管置換術（全弓部置換術: TARなど）。<br>・胸部降下大動脈：胸部大動脈ステントグラフト内挿術(TEVAR)が第一選択となることが多い。",
+      links: ["aad", "bentall", "aaa"]
+    });
+
+    addMedicalContent({
+      id: "bentall",
+      category: "循環器",
+      title: "Bentall手術 (ベントール手術)",
+      overview: "大動脈基部病変（大動脈弁閉鎖不全症 ＋ 大動脈基部瘤 / AAE）に対する心臓血管外科の代表的手術。",
+      surgery: "人工弁付き人工血管（コンジット）を用いて、大動脈弁および上行大動脈基部を一括置換し、左右の冠動脈口を人工血管に移植（再植）する術式。弁を温存するDavid手術やYacoub手術（弁温存大動脈基部形成術）も選択される。",
+      links: ["ar", "taa", "aad"]
+    });
+
+    addMedicalContent({
+      id: "asd",
+      category: "循環器",
+      title: "心房中隔欠損症 (ASD)",
+      overview: "心房中隔の欠損孔により左房から右房への左右シャントを生じる先天性心疾患。成人期に右心不全や心房細動、肺高血圧で発見されることがある。",
+      diagnosis: "聴診：II音の固定性分裂、肺動脈弁エリアの駆出性収縮期雑音。心エコーでシャント血流確認。",
+      treatment: "シャント量増大（Qp/Qs ≧ 1.5）で治療適応。二次孔欠損(Secundum type)で形態的条件を満たせば、カテーテル閉鎖術（Amplatzerアンプラッツァー閉鎖器等）が第一選択。条件非適応例や一次孔欠損には外科的閉鎖術。",
+      links: ["ph", "af", "heart-failure"]
+    });
+
+    // 5. 手術リスク・評価スコア
+    addMedicalContent({
+      id: "euroscore-sts",
+      category: "循環器",
+      title: "EuroSCORE II / STSスコア",
+      overview: "心臓血管外科手術における術後早期死亡リスク・合併症発生率を算出する国際的なリスク予測モデル。",
+      diagnosisCriteria: "【評価項目】年齢、性別、NYHA心機能分類、LVEF、緊急性、血清クレアチニン、術式（CABG、単独弁、複合手術）、大動脈病変、再手術の有無など。",
+      importantPoints: "TAVI vs SAVR、PCI vs CABG などのハートチームによる治療方針決定（Heart Team Discussion）において、解剖学的評価（SYNTAXスコア）とともに患者の全身手術リスクの客観的指標として必須。",
+      links: ["syntax-score", "as", "cabg"]
+    });
+
+    addMedicalContent({
+      id: "nyha-classification",
+      category: "循環器",
+      title: "NYHA心機能分類",
+      overview: "心不全患者における自覚症状の程度に基づく重症度分類（New York Heart Association）。",
+      severity: "・I度：心疾患はあるが日常的な身体活動では症状なし。<br>・II度：日常的な身体活動で息切れ・疲労感（軽度制限）。<br>・III度：日常以下の軽度の身体活動で症状出現（著明な制限）。<br>・IV度：安静時にも心不全症状が存在。",
+      links: ["heart-failure", "killip-classification"]
+    });
+
+    addMedicalContent({
+      id: "killip-classification",
+      category: "循環器",
+      title: "Killip分類",
+      overview: "急性心筋梗塞(AMI)発症早期における心不全・重症度評価分類。",
+      severity: "・Class I：心不全所見なし（30日死亡率 約6%）。<br>・Class II：軽度〜中等度の心不全（聴診で両側背部のラ音、III音徴候）。<br>・Class III：高度の心不全（明らかな急性肺水腫）。<br>・Class IV：心原性ショック（血圧低下、末梢循環不全）（30日死亡率 約80%）。",
+      links: ["stemi", "acs", "cardiogenic-shock"]
+    });
+
+    addMedicalContent({
+      id: "scai-shock",
+      category: "循環器",
+      title: "SCAI Shock Stage (心原性ショック分類)",
+      overview: "米国心血管インターベンション学会(SCAI)が提唱した、心原性ショックの重症度と治療介入基準を示す分類。",
+      severity: "・Stage A (At Risk)：リスクはあるがショック未発症。<br>・Stage B (Beginning)：低血圧・頻脈はあるが灌流不全なし。<br>・Stage C (Classic)：強心薬や機械的補助循環(MCS)を要する灌流不全。<br>・Stage D (Deteriorating)：MCS下でも増悪・高容量薬剤依存。<br>・Stage E (Extremis)：難治性心停止・心不全の終末期状態。",
+      links: ["cardiogenic-shock", "heart-failure"]
+    });
 
     // ==================================================
     // 今後、Geminiが生成した addMedicalContent({ ... }) を
