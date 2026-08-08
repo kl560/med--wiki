@@ -848,6 +848,148 @@
       severity: "・Stage A (At Risk)：リスクはあるがショック未発症。<br>・Stage B (Beginning)：低血圧・頻脈はあるが灌流不全なし。<br>・Stage C (Classic)：強心薬や機械的補助循環(MCS)を要する灌流不全。<br>・Stage D (Deteriorating)：MCS下でも増悪・高容量薬剤依存。<br>・Stage E (Extremis)：難治性心停止・心不全の終末期状態。",
       links: ["cardiogenic-shock", "heart-failure"]
     });
+    // ==================================================
+    // 循環器領域（最終完全網羅版：肺循環・ACHD・検査・薬剤）
+    // ==================================================
+
+    // 1. 肺循環疾患（右心不全・外科介入）
+    addMedicalContent({
+      id: "pah",
+      category: "循環器",
+      title: "肺動脈性肺高血圧症 (PAH)",
+      overview: "肺小動脈の増殖性変化により肺血管抵抗が上昇し、右心不全に至る予後不良な特発性・遺伝性疾患群（第1群肺高血圧症）。",
+      diagnosisCriteria: "右心カテーテル検査にて、安静時平均肺動脈圧(mPAP)≧20mmHg、肺動脈楔入圧(PAWP)≦15mmHg、肺血管抵抗(PVR)≧2WU（近年3WUから改訂）。",
+      medication: "肺血管拡張薬の早期からの多剤併用療法（Up-front combination therapy）が標準。①エンドセリン受容体拮抗薬（マシテンタン等）、②PDE5阻害薬/sGC刺激薬、③プロスタサイクリン受容体作動薬（セレキシパグ、エポプロステノール持続静注）。",
+      links: ["rhc", "heart-failure", "cteph"]
+    });
+
+    addMedicalContent({
+      id: "cteph",
+      category: "循環器",
+      title: "慢性血栓塞栓性肺高血圧症 (CTEPH)",
+      overview: "急性肺血栓塞栓症(PTE)の器質化血栓により、肺動脈の狭窄・閉塞が慢性的に持続し肺高血圧（第4群）と右心不全を来す指定難病。",
+      diagnosis: "肺換気・血流シンチグラフィ(V/Q scan)での区域性の血流欠損、右心カテーテル検査、造影CT/肺動脈造影(PAG)による網状・帯状(Web/Band)の器質化血栓の証明。",
+      surgery: "【外科的治療】中枢側病変に対しては、人工心肺・超低体温循環停止下で行う肺動脈血栓内膜摘除術(PEA/PTE)が根治術であり第一選択。<br>【カテーテル治療】末梢側病変や手術不適応例には、バルーン肺動脈形成術(BPA)を複数回施行する。内科的治療としてsGC刺激薬（リオシグアト）を併用。",
+      links: ["pte", "pah", "rhc"]
+    });
+
+    // 2. 炎症性疾患・心臓腫瘍
+    addMedicalContent({
+      id: "fulminant-myocarditis",
+      category: "循環器",
+      title: "劇症型心筋炎",
+      flowchart: [
+        { label: "感冒様症状（数日先行）", link: null },
+        { label: "急速な血行動態の破綻（ショック・致死性不整脈）", link: null },
+        { label: "心エコー（びまん性の壁肥厚・著明な壁運動低下）", link: null },
+        { label: "直ちに機械的補助循環（PCPS/Impella）の導入", link: "cardiogenic-shock" },
+        { label: "心筋生検 / ステロイドパルス・IVIG検討", link: null }
+      ],
+      pathophysiology: "ウイルス感染（コクサッキー、アデノ等）を契機とする過剰な免疫応答により、急激な心筋壊死と高度なポンプ機能不全を来す。",
+      treatment: "カテコールアミンのみでの維持は困難であり、躊躇なくPCPS（VA-ECMO）やImpella、またはECPELLAを導入し、自己心機能の回復（通常1〜2週間）を待つブリッジ治療が生命線。",
+      links: ["cardiogenic-shock", "vf", "av-block"]
+    });
+
+    addMedicalContent({
+      id: "cardiac-myxoma",
+      category: "循環器",
+      title: "心臓粘液腫 (Cardiac Myxoma)",
+      overview: "原発性心臓腫瘍の半数以上を占める良性腫瘍。約75%が左房内（心房中隔の卵円窩付近）に発生する。",
+      symptoms: "①腫瘍塞栓（脳梗塞、末梢動脈閉塞）、②血流障害（僧帽弁口への嵌頓による失神、突然死、MS様症状）、③全身の炎症症状（IL-6産生による発熱、CRP上昇）。",
+      surgery: "塞栓症および突然死のリスクが極めて高いため、診断がつき次第、準緊急的に人工心肺下での腫瘍摘出術の絶対適応。",
+      links: ["ischemic-stroke", "ms"]
+    });
+
+    // 3. 成人先天性心疾患 (ACHD)
+    addMedicalContent({
+      id: "vsd",
+      category: "循環器",
+      title: "心室中隔欠損症 (VSD)",
+      overview: "心室中隔の欠損により左室から右室への左右シャントを生じる疾患。先天性心疾患で最多。",
+      pathophysiology: "小欠損は自然閉鎖や無症状経過をたどるが、大欠損を放置すると肺高血圧が進行し、右左シャントに逆転するEisenmenger（アイゼンメンゲル）症候群に至る（この状態になると手術禁忌）。",
+      surgery: "有意な左右シャント（Qp/Qs ≧ 1.5）や左室拡大を認める場合、パッチ閉鎖術の適応。大動脈弁逸脱(RCCP)や大動脈弁閉鎖不全(AR)を合併しやすい（特に高位欠損）。",
+      links: ["asd", "pah", "ar"]
+    });
+
+    addMedicalContent({
+      id: "tof",
+      category: "循環器",
+      title: "ファロー四徴症 (TOF) 術後遠隔期",
+      overview: "右室流出路狭窄、VSD、大動脈騎乗、右室肥大の4つの特徴を持つチアノーゼ性心疾患。幼少期に根治術（心内修復術）を受けて成人した患者(ACHD)の管理が重要。",
+      importantPoints: "【術後遠隔期の課題】右室流出路パッチ拡大術後の肺動脈弁閉鎖不全(PR)が必発し、長年の容量負荷により右心不全や致死性不整脈（VT）を来す。",
+      surgery: "高度のPRと右室拡大（RVEDVI ≧ 150mL/m²等）を認める場合、不可逆的な右室機能不全に陥る前に肺動脈弁置換術(PVR)を行う。",
+      links: ["heart-failure", "vt"]
+    });
+
+    // 4. 末梢・脳血管領域
+    addMedicalContent({
+      id: "carotid-stenosis",
+      category: "循環器",
+      title: "頸動脈狭窄症 (CAS)",
+      overview: "頸部内頸動脈の動脈硬化性プラークにより、脳梗塞（アテローム血栓性、またはプラーク破綻による塞栓性）を来す疾患。",
+      diagnosis: "頸動脈エコー（IMT肥厚、プラークの性状[エコー低輝度・潰瘍形成は脆弱(vulnerable)プラーク]）、MRA、造影CT、脳血流シンチ(SPECT)。",
+      surgery: "【手術適応】症候性で狭窄率≧50%、または無症状でも狭窄率≧80%（または≧60%で進行性等）の場合に血行再建を検討。<br>①CEA（頸動脈内膜剥離術）：プラークを直接摘出する外科手術。標準治療。<br>②CAS（頸動脈ステント留置術）：ハイリスク患者（頸部放射線治療後、重症心疾患合併など）に対するカテーテル治療。",
+      links: ["ischemic-stroke", "pad", "cabg"]
+    });
+
+    // 5. 循環動態評価・画像検査
+    addMedicalContent({
+      id: "rhc",
+      category: "循環器",
+      title: "右心カテーテル検査 (Swan-Ganz)",
+      overview: "スワンガンツカテーテルを内頸静脈等から挿入し、右房、右室、肺動脈、肺動脈楔入圧(PAWP)を持続測定する侵襲的血行動態モニタリング。",
+      diagnosis: "【測定項目】右房圧(RAP/CVP)、肺動脈圧(PAP)、PAWP（左房圧・左室拡張末期圧を反映）。<br>【心拍出量(CO)】熱希釈法またはFick法で算出。<br>【Forrester分類】急性心筋梗塞の血行動態分類。CI(心係数) 2.2 と PAWP 18 を基準に4群に分け、利尿薬や強心薬の適応を決定する。",
+      links: ["cardiogenic-shock", "heart-failure", "pah"]
+    });
+
+    addMedicalContent({
+      id: "tee",
+      category: "循環器",
+      title: "経食道心エコー (TEE)",
+      overview: "食道内から心臓の後方（左房側）に近接して超音波を当てる検査。経胸壁心エコー(TTE)では描出困難な微細構造を鮮明に評価できる。",
+      diagnosis: "【主な適応】<br>①心房細動における左心耳(LAA)内血栓の除外（カルディオバージョン前）。<br>②感染性心内膜炎(IE)の微小疣贅や膿瘍の検出。<br>③僧帽弁閉鎖不全(MR)の逆流メカニズム（逸脱部位等）の詳細な術前評価。<br>④大動脈解離のフラップ評価。",
+      links: ["af", "ie", "mr", "aad"]
+    });
+
+    addMedicalContent({
+      id: "cardiac-mri",
+      category: "循環器",
+      title: "心臓MRI",
+      overview: "心機能、壁運動、心筋性状を被曝なしに詳細に評価する画像検査。",
+      imaging: "【遅延造影 (LGE: Late Gadolinium Enhancement)】ガドリニウム造影剤の洗い出しが遅延する部位（線維化・瘢痕）を白く描出。<br>・心筋梗塞：心内膜側から貫壁性に拡がる遅延造影。<br>・DCM：壁内の中層線維化。<br>・心サルコイドーシス / 心筋炎：心外膜側または壁内の斑状遅延造影。<br>・心アミロイドーシス：びまん性の心内膜下遅延造影。",
+      links: ["dcm", "cardiac-sarcoidosis", "cardiac-amyloidosis", "takotsubo"]
+    });
+
+    // 6. 心血管作動薬・脂質異常
+    addMedicalContent({
+      id: "inotropes",
+      category: "循環器",
+      title: "カテコールアミン / 強心薬・昇圧薬",
+      overview: "ショックや急性心不全時の循環動態維持に用いる持続静注薬。",
+      medication: "【ノルアドレナリン】α1作用が主。強力な血管収縮作用で血圧を維持（敗血症性ショック、心原性ショックの第一選択）。<br>【ドブタミン】β1作用が主。心収縮力増強と心拍数増加（Forrester II/IV群等）。<br>【アドレナリン】αβ両作用。心停止時の蘇生やアナフィラキシーに使用。<br>【ミルリノン】PDE3阻害薬。心収縮力増強と末梢血管拡張（Inodilator）。右心不全や肺高血圧合併時に有用。",
+      importantPoints: "すべて心筋酸素消費量を増大させるため、漫然とした使用は予後を悪化させる。離脱を目指した原因療法・MCS導入が不可欠。",
+      links: ["cardiogenic-shock", "sepsis", "rhc"]
+    });
+
+    addMedicalContent({
+      id: "antiarrhythmics",
+      category: "循環器",
+      title: "抗不整脈薬 (Vaughan Williams分類)",
+      overview: "イオンチャネル等を遮断し不整脈を抑制する薬剤群。",
+      medication: "・I群 (Naチャネル遮断): Ia（シベンゾリン等）、Ib（リドカイン、メキシレチン/虚血心筋に選択的）、Ic（ピルシカイニド、フレカイニド/AF洞調律維持）。<br>・II群 (β遮断): ビソプロロール等（交感神経緊張による不整脈抑制）。<br>・III群 (Kチャネル遮断): アミオダロン、ニフェカラント。活動電位持続時間を延長。アミオダロンは器質的心疾患合併の致死性不整脈（VT/VF、心不全合併AF）に最も安全かつ有効。<br>・IV群 (Caチャネル遮断): ベラパミル、ジルチアゼム（PSVT、AFのレートコントロール）。",
+      importantPoints: "I群、III群は催不整脈作用（QT延長からのTdP等）を有するため、適応と心電図モニタリングに細心の注意が必要。",
+      links: ["af", "vt", "psvt", "lqts"]
+    });
+
+    addMedicalContent({
+      id: "fh",
+      category: "内分泌代謝",
+      title: "家族性高コレステロール血症 (FH)",
+      overview: "LDL受容体遺伝子等の変異により、著明な高LDL-C血症、早発性冠動脈疾患(CAD)、腱黄色腫を来す常染色体顕性（優性）遺伝疾患。ヘテロ接合体は300人に1人と高頻度。",
+      diagnosisCriteria: "①未治療のLDL-C≧180mg/dL、②腱黄色腫（アキレス腱肥厚：X線で男性≧9.0mm、女性≧8.0mm）または皮膚結節性黄色腫、③FHまたは早発性CADの家族歴。2項目以上で診断。",
+      treatment: "強力なスタチン（ロスバスタチン、アトルバスタチン）に加え、エゼチミブ（小腸コレステロールトランスポーター阻害）や、PCSK9阻害薬（エボロクマブ等の抗体薬）を積極的に併用し、LDL-Cの厳格な低下（二次予防なら < 70mg/dL または < 55mg/dL）を目指す。",
+      links: ["acs", "cabg", "pad"]
+    });
 
     // ==================================================
     // 今後、Geminiが生成した addMedicalContent({ ... }) を
