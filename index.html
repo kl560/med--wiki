@@ -102,8 +102,12 @@
       db[data.id] = data;
       
       if (data.category) {
-        if (!categoryMap[data.category]) categoryMap[data.category] = [];
-        if (!categoryMap[data.category].includes(data.id)) categoryMap[data.category].push(data.id);
+        // 改良：カテゴリが複数(配列)でも単一(文字列)でも対応できるように変換
+        const categories = Array.isArray(data.category) ? data.category : [data.category];
+        categories.forEach(cat => {
+          if (!categoryMap[cat]) categoryMap[cat] = [];
+          if (!categoryMap[cat].includes(data.id)) categoryMap[cat].push(data.id);
+        });
       }
     }
 
