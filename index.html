@@ -1225,6 +1225,71 @@
       links: ["acls", "sepsis"]
     });
 
+    // ==================================================
+    // 神経・救急 (意識障害・失神・TIA)
+    // ==================================================
+
+    addMedicalContent({
+      id: "tia",
+      category: "神経",
+      title: "一過性脳虚血発作 (TIA)",
+      flowchart: [
+        { label: "局所神経症状（片麻痺・失語など）の出現", link: null },
+        { label: "短時間（多くは数分〜数十分）で症状消失", link: null },
+        { label: "頭部MRI（DWIで急性期梗塞巣なし）", link: null },
+        { label: "TIAと診断", link: "tia" },
+        { label: "ABCD2スコア等で脳梗塞リスク評価", link: null },
+        { label: "即時入院・抗血小板薬等の早期開始", link: "ischemic-stroke" }
+      ],
+      definition: "脳・脊髄・網膜の局所虚血による一過性の神経症状で、急性梗塞の証拠（MRIでの高信号等）を伴わないもの。従来の「24時間以内の症状消失」という時間ベースの定義から、組織ベースの定義へ移行している。",
+      symptoms: "片麻痺、構音障害、失語、黒内障（片眼の視力喪失）などの「局所神経症状(Focal sign)」。※原則として意識消失は来さない（脳幹の虚血などを除く）。",
+      severity: "ABCD2スコア（Age≧60, Blood pressure≧140/90, Clinical features[片麻痺, 構音障害], Duration[持続時間], Diabetes[糖尿病]）で発症後48時間以内の脳梗塞リスクを評価。TIAは脳梗塞の切迫状態（Warning）と捉える。",
+      treatment: "原因（アテローム血栓性、心原性など）を迅速に検索し、発症早期からの抗血小板薬2剤併用療法（DAPT: アスピリン＋クロピドグレルを21日間等）や抗凝固療法を開始し、本格的な脳梗塞の発症を防ぐ。",
+      links: ["ischemic-stroke", "tloc-diff", "af", "carotid-stenosis"]
+    });
+
+    addMedicalContent({
+      id: "syncope",
+      category: "救急",
+      title: "失神 (Syncope)",
+      overview: "脳全体の血流が一時的に低下することで生じる、一過性の意識消失発作(TLoC)。",
+      definition: "①発症が迅速、②持続時間が短い、③自然かつ完全に回復する、という特徴を持つ。",
+      differential: "大きく3つに分類される。<br>1. 反射性（神経調節性）失神：血管迷走神経性失神など。誘因（立位、痛み、排尿等）と前駆症状（冷汗、悪心、眼の前が暗くなる等）を伴う。<br>2. 起立性低血圧：脱水や降圧薬、自律神経障害による。<br>3. 心原性失神：致死的な原因。不整脈（VT、VF、完全房室ブロック等）や器質的心疾患（重症AS、HOCM、肺塞栓等）。",
+      initialTests: "すべての失神患者に詳細な病歴聴取（前駆症状、目撃者の証言）、身体診察、および「12誘導ECG」の施行が必須（心原性失神の除外）。",
+      links: ["tloc-diff", "as", "vf", "av-block", "pte"]
+    });
+
+    addMedicalContent({
+      id: "tloc",
+      category: "救急",
+      title: "一過性意識消失 (TLoC)",
+      overview: "一時的に意識を失い、その後自然に回復する病態の総称(Transient Loss of Consciousness)。",
+      differential: "TLoCは以下の4つに大別される。<br>① <a href='#syncope' class='wiki-link'>失神</a>（脳血流低下）<br>② てんかん発作（脳の異常放電）<br>③ 心因性非てんかん性発作（PNES等）<br>④ 稀な原因（くも膜下出血、椎骨脳底動脈領域のTIAなど）",
+      historyTaking: "意識消失「前」（誘因、前駆症状の有無）、「中」（痙攣の有無、持続時間、舌咬傷・尿失禁の有無）、「後」（意識回復の速さ、もうろう状態[postictal state]の有無）の病歴を本人・目撃者から徹底的に聴取し、鑑別を行う。",
+      links: ["tloc-diff", "syncope", "tia", "altered-mental-status"]
+    });
+
+    addMedicalContent({
+      id: "altered-mental-status",
+      category: "救急",
+      title: "意識障害 (Altered Mental Status)",
+      overview: "覚醒度（目を開けているか）または認知機能（状況を理解しているか）が低下・変容し、自然には回復していない状態。失神(TLoC)とは異なり「持続する」点が特徴。",
+      severity: "Japan Coma Scale (JCS: 3-3-9度方式)、または Glasgow Coma Scale (GCS: EVMの合計3〜15点)で客観的に評価し、経時的変化を追う。",
+      differential: "原因検索の語呂合わせ「AIUEOTIPS」が有名。<br>・A: Alcoholism (アルコール)<br>・I: Insulin (低血糖/高血糖)<br>・U: Uremia (尿毒症) / Underdose (薬剤離脱)<br>・E: Encephalopathy (脳症) / Endocrine (内分泌)<br>・O: Oxygen (低酸素) / Opiates (オピオイド)<br>・T: Trauma (外傷) / Temperature (体温異常)<br>・I: Infection (髄膜炎など)<br>・P: Psychiatric (精神疾患) / Porphyria (ポルフィリン症)<br>・S: Stroke (脳卒中) / Shock (ショック) / Seizure (てんかん重積)",
+      initialTests: "ABCの安定化を最優先し、直ちに「血糖測定（Dextrox）」を行う（低血糖はただちに不可逆的な脳損傷を招くため）。その後、頭部CTや血液検査・動脈血ガス等を進める。",
+      links: ["tloc-diff", "ischemic-stroke", "sepsis", "intoxication"]
+    });
+
+    addMedicalContent({
+      id: "tloc-diff",
+      category: "救急",
+      title: "【まとめ】意識消失・失神・意識障害・TIAの違い",
+      overview: "救急外来で混同されやすい神経・循環器症状の鑑別ポイント。",
+      differential: "■ 意識障害 (Altered Mental Status)<br>・意識がない状態が「現在も持続している」。<br>・脳全体の問題（代謝性、薬物中毒、広範な脳内病変など）。<br><br>■ 一過性意識消失 (TLoC) ＝ 意識はすでに「完全に回復した」<br>以下の2つが代表的。<br>① 失神 (Syncope)：脳の血流が一時的に低下。数秒〜数十秒で回復し、目覚めはスッキリしている。姿勢保持ができず倒れる。<br>② てんかん発作 (Seizure)：脳の異常な電気活動。痙攣（特に四肢の強直間代性痙攣）を伴うことが多く、発作後はしばらく「もうろう状態（Postictal confusion）」が続く。舌咬傷や失禁を伴いやすい。<br><br>■ TIA (一過性脳虚血発作)<br>・脳の「局所」の血流低下。片麻痺や失語などの局所症状が起きて、その後回復する。<br>・原則として「意識消失は起こさない」（※例外として、椎骨脳底動脈領域の虚血で脳幹の網様体賦活系が障害された場合は意識を失うことがあるが、まれ）。<br>・「失神」を主訴に来院した患者を安易に「TIA」と診断してはいけない。",
+      importantPoints: "「意識を失って倒れたが今は元気」な患者に対し、最初に確認すべきは「失神（血流の問題）」か「てんかん発作（電気の問題）」かの鑑別である。そして失神であれば「致死的な心原性失神」を12誘導ECG等で確実に除外する。",
+      links: ["syncope", "tloc", "tia", "altered-mental-status"]
+    });
+
   </script>
 </body>
 </html>
