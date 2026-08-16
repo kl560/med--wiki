@@ -272,6 +272,21 @@
       ],
       links: ["stemi", "nstemi", "pci"]
     });
+    addMedicalContent({
+      id: "acs",
+      category: "循環器",
+      title: "急性冠症候群 (ACS)",
+      overview: "冠動脈内プラークの破綻・びらんにより血栓が形成され、急激な心筋虚血を来す疾患群。<a href='#stemi' class='wiki-link'>STEMI</a>、<a href='#nstemi' class='wiki-link'>NSTEMI</a>、不安定狭心症(UA)を含む。",
+      pathophysiology: "アテローム硬化巣の破綻により内皮下組織が血流に曝露。血小板凝集と凝固カスケードが活性化し、白色血栓（血小板主体）から赤色血栓（フィブリン主体）へと進展する。Type 1 MIに分類される。",
+      diagnosis: "①典型的な安静時胸痛（20分以上持続）、②10分以内の12誘導ECG取得（ST変化の評価）、③高感度心筋トロポニン(hs-cTn)の測定。",
+      oralQuestions: [
+        { q: "ACSを疑った場合、最初に何を行う？", a: "10分以内の12誘導ECG取得、バイタルサインの確認、酸素投与（SpO2<90%）。" }
+      ],
+      severity: "Killip分類（肺うっ血の程度による心不全評価）および、NSTEMIにおけるGRACEリスクスコアを用いた早期侵襲的戦略の層別化が重要。",
+      treatment: "抗血小板薬（アスピリン＋P2Y12阻害薬のDAPT）、抗凝固薬（未分画ヘパリン等）。早期の冠動脈造影(CAG)および血行再建（<a href='#pci' class='wiki-link'>PCI</a>または<a href='#cabg' class='wiki-link'>CABG</a>）。",
+      importantPoints: "近年は出血リスク（ARC-HBR等）を評価し、DAPT期間の短縮（1〜3ヶ月）後にP2Y12阻害薬単剤へ移行するSAPT de-escalation戦略が注目されている（ESC 2023 ACS Guidelines）。",
+      links: ["stemi", "nstemi", "pci", "cabg", "cardiogenic-shock"]
+    });
 
     addMedicalContent({
       id: "stemi",
@@ -328,18 +343,7 @@
     // ==================================================
     
     // 1. 虚血性心疾患・冠動脈インターベンション・心臓外科
-    addMedicalContent({
-      id: "acs",
-      category: "循環器",
-      title: "急性冠症候群 (ACS)",
-      overview: "冠動脈内プラークの破綻・びらんにより血栓が形成され、急激な心筋虚血を来す疾患群。<a href='#stemi' class='wiki-link'>STEMI</a>、<a href='#nstemi' class='wiki-link'>NSTEMI</a>、不安定狭心症(UA)を含む。",
-      pathophysiology: "アテローム硬化巣の破綻により内皮下組織が血流に曝露。血小板凝集と凝固カスケードが活性化し、白色血栓（血小板主体）から赤色血栓（フィブリン主体）へと進展する。Type 1 MIに分類される。",
-      diagnosis: "①典型的な安静時胸痛（20分以上持続）、②10分以内の12誘導ECG取得（ST変化の評価）、③高感度心筋トロポニン(hs-cTn)の測定。",
-      severity: "Killip分類（肺うっ血の程度による心不全評価）および、NSTEMIにおけるGRACEリスクスコアを用いた早期侵襲的戦略の層別化が重要。",
-      treatment: "抗血小板薬（アスピリン＋P2Y12阻害薬のDAPT）、抗凝固薬（未分画ヘパリン等）。早期の冠動脈造影(CAG)および血行再建（<a href='#pci' class='wiki-link'>PCI</a>または<a href='#cabg' class='wiki-link'>CABG</a>）。",
-      importantPoints: "近年は出血リスク（ARC-HBR等）を評価し、DAPT期間の短縮（1〜3ヶ月）後にP2Y12阻害薬単剤へ移行するSAPT de-escalation戦略が注目されている（ESC 2023 ACS Guidelines）。",
-      links: ["stemi", "nstemi", "pci", "cabg", "cardiogenic-shock"]
-    });
+    
 
     addMedicalContent({
       id: "stemi",
