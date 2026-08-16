@@ -1163,6 +1163,68 @@
       links: ["af"]
     });
 
+    // ==================================================
+    // 救急・集中治療 (3次救急・蘇生)
+    // ==================================================
+
+    addMedicalContent({
+      id: "acls",
+      category: "救急",
+      title: "二次救命処置 (ACLS) / 心停止",
+      flowchart: [
+        { label: "心停止の確認・CPR開始", link: null },
+        { label: "波形評価 (ショック適応か？)", link: null },
+        { label: "YES: VF / pVT → 除細動 ＋ アドレナリン・アミオダロン", link: "vf" },
+        { label: "NO: PEA / Asystole → アドレナリン静注・原因検索(4H4T)", link: null },
+        { label: "自己心拍再開 (ROSC) → TTM(体温管理療法)・PCI検討", link: "pci" }
+      ],
+      overview: "高度な気道確保、静脈路確保、薬物投与を伴う心肺蘇生法。",
+      treatment: "【除細動適応波形(VF/無脈性VT)】ショック後、直ちにCPR再開。2回目のショック後にアドレナリン1mg静注、3回目以降にアミオダロン300mg静注。<br>【除細動非適応波形(PEA/Asystole)】可及的速やかにアドレナリン1mgを静注し、可逆的な原因（4H4T: 循環血液量減少、低酸素、水素イオン[アシドーシス]、低/高K血症、低体温、緊張性気胸、心タンポナーデ、毒物、肺塞栓/冠血栓）を検索・治療する。",
+      importantPoints: "院外心停止や難治性VF/pVTに対し、PCPS(VA-ECMO)を導入して蘇生を図る ECPR (Extracorporeal CPR) が、3次救急施設における強力な選択肢となる。",
+      links: ["vf", "vt", "cardiogenic-shock", "stemi"]
+    });
+
+    addMedicalContent({
+      id: "jatec",
+      category: "救急",
+      title: "重症外傷初期診療 (JATEC)",
+      overview: "日本外傷学会が定める「防ぎ得る外傷死（PTD）」を回避するための標準化された外傷初期診療ガイドライン。",
+      diagnosis: "【Primary Survey (ABCDEアプローチ)】<br>A (Airway): 気道確保と頸椎保護<br>B (Breathing): 呼吸評価（致死的胸部外傷の除外：緊張性気胸、大量血胸、フレイルチェスト等）<br>C (Circulation): 循環評価と止血（FASTエコー、骨盤骨折に対するシーツラッピング、大量輸液・輸血）<br>D (Dysfunction of CNS): 中枢神経評価（GCS、瞳孔）<br>E (Exposure/Environmental): 脱衣と体温管理",
+      treatment: "Primary Surveyで異常（生理学的徴候の破綻）を認めた場合、直ちに蘇生処置（胸腔ドレナージ、緊急輸血、REBOA挿入等）を行い、根本的止血術（Damage Control Surgery: DCS や IVR）へ移行する。",
+      links: ["pneumothorax", "pericarditis", "sepsis"]
+    });
+
+    addMedicalContent({
+      id: "anaphylaxis",
+      category: "救急",
+      title: "アナフィラキシー / アナフィラキシーショック",
+      overview: "アレルゲン等の曝露により複数臓器に全身性の急性アレルギー反応が惹起され、生命を脅かす過敏反応。",
+      symptoms: "皮膚粘膜症状（膨疹、血管浮腫）に加え、呼吸器症状（喘鳴、呼吸困難）、循環器症状（血圧低下、意識障害）、消化器症状（持続する腹痛、嘔吐）のいずれかを伴う。",
+      treatment: "第一選択は「アドレナリン 0.3mg (小児0.15mg) の大腿前外側への筋肉内注射(IM)」。躊躇せず早期に投与する。補助的治療としてH1/H2ブロッカー静注、ステロイド静注（二相性反応の予防）。",
+      importantPoints: "アドレナリンの静脈内注射(IV)は致死的な不整脈や急激な血圧上昇を招く恐れがあるため、心停止（ACLS）または専門医による持続静注時以外は禁忌。",
+      links: ["acls"]
+    });
+
+    addMedicalContent({
+      id: "acute-abdomen",
+      category: "救急",
+      title: "急性腹症 (Acute Abdomen)",
+      overview: "緊急手術や迅速な処置を必要とする可能性のある急性の腹痛を主訴とする病態の総称。",
+      differential: "【致死的疾患の除外】腹部大動脈瘤(AAA)破裂、急性大動脈解離、上腸間膜動脈(SMA)閉塞症、消化管穿孔、子宮外妊娠破裂。<br>【頻度が高い疾患】急性虫垂炎、急性胆嚢炎・胆管炎、腸閉塞(イレウス)、尿管結石。",
+      initialTests: "バイタルサイン、腹部診察（筋性防御・反跳痛などの腹膜刺激症状）、採血（血算、生化学、乳酸値）、腹部エコー（FASTを含む）、造影CT（診断に極めて強力）。",
+      links: ["aaa", "aad", "acute-pancreatitis"]
+    });
+
+    addMedicalContent({
+      id: "intoxication",
+      category: "救急",
+      title: "急性中毒 (Acute Intoxication)",
+      overview: "医薬品、農薬、工業用品、自然毒などの過剰摂取・曝露による臓器障害。",
+      treatment: "①吸収阻害（胃洗浄：摂取後1時間以内の致死的毒物に限る、活性炭投与）、②排泄促進（強制利尿、血液吸着[DHP]・血液透析）、③特異的拮抗薬（アンチドート）の投与。",
+      importantPoints: "【代表的な拮抗薬】<br>・ベンゾジアゼピン系 → フルマゼニル<br>・オピオイド → ナロキソン<br>・アセトアミノフェン → N-アセチルシステイン<br>・有機リン剤 → アトロピン、PAM<br>・三環系抗うつ薬 → 炭酸水素ナトリウム",
+      links: ["acls", "sepsis"]
+    });
+
   </script>
 </body>
 </html>
