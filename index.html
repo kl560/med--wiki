@@ -1001,6 +1001,53 @@
       surgery: "破裂リスクを考慮し、男性50-55mm以上、女性45-50mm以上、または拡大速度が半年で5mm以上の場合に手術適応。人工血管置換術(OAR)とステントグラフト内挿術(EVAR)があり、解剖学的条件や患者の耐容能（フレイル、併存疾患）により選択する（大動脈瘤・大動脈解離診療ガイドライン）。",
       links: ["heart-failure"]
     });
+    // ==================================================
+    // 循環器・血管内科 (追加)
+    // ==================================================
+    addMedicalContent({
+      id: "ie-janeway-osler",
+      category: "循環器",
+      title: "感染性心内膜炎 (IE) の末梢微小血管病変",
+      overview: "IEにおける免疫学的機序や微小塞栓による特有の末梢病変。",
+      symptoms: "・Janeway病変 (ジェーンウェイ)：手掌や足底の無痛性の紅斑・出血斑（微小塞栓が原因）。<br>・Osler結節 (オスラー)：指趾の指腹に生じる有痛性の結節（免疫複合体沈着が原因）。<br>・爪下出血斑 (Splinter hemorrhage)：爪床の線状出血。<br>・Roth斑 (ロス)：眼底検査で見られる中心部が蒼白な網膜出血。",
+      links: ["ie", "nbte"]
+    });
+
+    addMedicalContent({
+      id: "nbte",
+      category: "循環器",
+      title: "非細菌性血栓性心内膜炎 (NBTE)",
+      overview: "感染（細菌）を伴わずに心臓の弁にフィブリンと血小板からなる疣贅が形成される病態。",
+      differential: "感染性心内膜炎(IE)との鑑別が重要。NBTEは血液培養陰性であり、基礎疾患として【悪性腫瘍】（Trousseau症候群等の凝固能亢進状態）や、SLE等に伴う【Libman-Sacks (リブマン・サックス) 心内膜炎】（抗リン脂質抗体症候群の関与など）によるものがある。",
+      links: ["ie-janeway-osler", "sle", "ie"]
+    });
+
+    addMedicalContent({
+      id: "renovascular-hypertension",
+      category: "循環器",
+      title: "腎血管性高血圧",
+      overview: "腎動脈の狭窄により腎血流量が低下し、レニン・アンジオテンシン・アルドステロン系(RAAS)が過剰に活性化して生じる二次性高血圧。",
+      pathophysiology: "高齢者ではアテローム動脈硬化、若年女性では線維筋性異形成(FMD)が原因となる。腹部血管雑音(bruit)を聴取することがある。治療はRAAS阻害薬（ただし両側狭窄では腎機能悪化のため禁忌）や経皮的腎動脈形成術(PTRA)。",
+      links: ["ckd", "pad"]
+    });
+    addMedicalContent({
+      id: "heart-failure",
+      category: "循環器",
+      title: "心不全 (Heart Failure)",
+      flowchart: [
+        { label: "息切れ・浮腫", link: null },
+        { label: "心エコー・BNP/NT-proBNP測定", link: null },
+        { label: "LVEFによる分類 (HFrEF/HFmrEF/HFpEF)", link: null },
+        { label: "至適薬物療法 (GDMT)", link: null },
+        { label: "重症例：機械的補助循環・心移植", link: null }
+      ],
+      overview: "心筋障害等により心機能が低下し、末梢臓器の酸素需要に見合う血流を拍出できない、あるいは拡張不全により静脈圧が上昇する症候群。",
+      pathophysiology: "心臓の構造的・機能的異常により心室の充満・拍出が障害される。代償機序として交感神経系やRAASが賦活化されるが、長期的には心筋リモデリングを促進し悪循環に陥る。",
+      diagnosis: "LVEFによる分類：HFrEF(≦40%), HFmrEF(41-49%), HFpEF(≧50%)。急性心不全の血行動態評価にはNohria-Stevenson分類（クリニカルシナリオ[CS]）が有用（うっ血の有無[Wet/Dry]と末梢循環不全の有無[Cold/Warm]）。",
+      medication: "【HFrEF】Fantastic Four（ARNI / ACE阻害薬、β遮断薬、MRA、SGLT2阻害薬）の早期並行導入と最大忍容量へのUp-titrationが基本。<br>【HFpEF】SGLT2阻害薬（エンパグリフロジン、ダパグリフロジン）が予後改善効果を示しクラスI推奨。",
+      surgery: "内科的治療抵抗性の重症HFrEFには、CRT（心臓再同期療法）、IABPやPCPS(VA-ECMO)、Impellaなどの機械的補助循環、左室補助人工心臓(LVAD: HeartMate 3等)の植込み、最終的に心臓移植を適応評価する（日本循環器学会 急性･慢性心不全診療ガイドライン）。",
+      links: ["cardiogenic-shock", "valvular-disease", "acs", "aaa"]
+    });
 
 
     // ==================================================
@@ -1044,6 +1091,28 @@
       treatment: "R-CHOP療法（リツキシマブ、シクロホスファミド、ドキソルビシン、ビンクリスチン、プレドニゾロン）が標準治療。再発・難治例には自家末梢血幹細胞移植(ASCT)を伴う大量化学療法やCAR-T細胞療法を考慮（日本血液学会 造血器腫瘍診療ガイドライン）。",
       links: ["aml"]
     });
+    // ==================================================
+    // 血液内科
+    // ==================================================
+    addMedicalContent({
+      id: "blood-transfusion",
+      category: "血液",
+      title: "輸血 (合併症と対策)",
+      overview: "赤血球、血小板、新鮮凍結血漿(FFP)などの補充療法。",
+      importantPoints: "【合併症】<br>・輸血後GVHD（移植片対宿主病）：受血者の組織を攻撃する致死的合併症。予防のため血液製剤に【放射線照射】を行う。<br>・TRALI (輸血関連急性肺障害)：輸血中の抗白血球抗体による非心原性肺水腫。<br>・TACO (輸血関連循環過負荷)：過剰な輸血速度による心原性肺水腫（心不全）。<br>・ABO不適合輸血：重大な医療事故。溶血反応・ショックを来す。",
+      links: ["heart-failure", "sepsis-qsofa"]
+    });
+
+   
+    addMedicalContent({
+      id: "polycythemia-vera",
+      category: "血液",
+      title: "真性多血症 (PV)",
+      overview: "造血幹細胞の後天的な遺伝子変異（約95%で【JAK2遺伝子変異(V617F)】陽性）により、赤血球を中心に白血球・血小板も多系統で自律的に増殖する骨髄増殖性腫瘍。",
+      symptoms: "顔面紅潮、頭痛、入浴後の皮膚そう痒感、血栓症（脳梗塞等）。",
+      treatment: "血栓症予防が主目的。目標Ht値<45%を維持するための【瀉血療法】および【低用量アスピリン】投与。高リスク例には細胞減少薬（ヒドロキシウレア等）。近年はペグインターフェロンα-2a（ロペグインターフェロン）も承認されている。",
+      links: ["ischemic-stroke", "blood-transfusion"]
+    });
 
     // ==================================================
     // 消化管
@@ -1073,6 +1142,79 @@
       treatment: "早期（Tis, T1の一部）は内視鏡的切除（EMR, ESD）。T1（深部浸潤）〜T4は外科的切除（腸管切除＋D2/D3リンパ節郭清）。Stage IIIおよび一部のStage IIには術後補助化学療法（CAPOX、FOLFOX等）を行う（大腸癌治療ガイドライン）。",
       links: ["gastric-cancer", "ibd"]
     });
+    // ==================================================
+    // 消化器内科・消化管外科
+    // ==================================================
+    addMedicalContent({
+      id: "atrophic-gastritis",
+      category: "消化管",
+      title: "萎縮性胃炎",
+      overview: "胃粘膜の慢性的な炎症により腺組織が萎縮した状態。胃癌の重要な前癌病変。",
+      pathophysiology: "主な原因は Helicobacter pylori 感染（B型胃炎）。自己免疫性（A型胃炎、悪性貧血を合併）も存在する。",
+      diagnosis: "上部消化管内視鏡（木村・竹本分類）にて萎縮境界を判定。血清ペプシノゲン値低下。",
+      treatment: "H. pylori 陽性例には除菌療法が強く推奨される（胃癌発生リスクの低減）。自己免疫性の場合はビタミンB12補充療法。",
+      links: ["gastric-cancer", "peptic-ulcer"]
+    });
+
+    addMedicalContent({
+      id: "peptic-ulcer",
+      category: "消化管",
+      title: "消化性潰瘍 (胃・十二指腸潰瘍)",
+      overview: "胃酸やペプシンにより消化管粘膜が傷害され、粘膜下層以深の欠損を生じた状態。",
+      pathophysiology: "H. pylori 感染および NSAIDs（非ステロイド性抗炎症薬）/ 低用量アスピリン の内服が二大要因。",
+      treatment: "活動期にはプロトンポンプ阻害薬(PPI)またはP-CAB（ボノプラザン）の投与。H. pylori 陽性時は除菌。出血時には内視鏡的止血術（クリップ法、高周波凝固等）。",
+      links: ["atrophic-gastritis", "gastric-cancer"]
+    });
+
+    addMedicalContent({
+      id: "esophageal-cancer",
+      category: "消化管",
+      title: "食道癌",
+      overview: "食道粘膜から発生する悪性腫瘍。日本では扁平上皮癌が9割を占めるが、欧米ではバレット食道由来の腺癌が多い。",
+      symptoms: "嚥下困難、体重減少。進行すると<a href='#recurrent-laryngeal-nerve-palsy' class='wiki-link'>反回神経麻痺</a>による嗄声(させい)を来す。",
+      treatment: "内視鏡的切除(ESD)、外科的切除（右開胸開腹食道亜全摘術＋3領域リンパ節郭清）、化学放射線療法(dCRT)。近年はニボルマブ等ICIの併用が進む。",
+      links: ["achalasia", "recurrent-laryngeal-nerve-palsy", "dysphagia"]
+    });
+
+    addMedicalContent({
+      id: "achalasia",
+      category: "消化管",
+      title: "食道アカラシア",
+      overview: "食道下部括約筋(LES)の弛緩不全と食道体部の蠕動運動消失を特徴とする原因不明の運動機能障害。",
+      diagnosis: "食道造影検査での「鳥のくちばし状(Bird beak)」狭窄、食道内圧測定。",
+      treatment: "内視鏡的バルーン拡張術、経口内視鏡的筋層切開術(POEM)、腹腔鏡下Heller筋層切開術＋Dor噴門形成術。",
+      links: ["esophageal-cancer", "dysphagia"]
+    });
+
+    addMedicalContent({
+      id: "ileus-hernia",
+      category: "消化管",
+      title: "腸閉塞 (イレウス) / 閉鎖孔ヘルニア",
+      overview: "腸管内容物の肛門側への移動が障害された状態。機械的（閉塞性・絞扼性）と機能的（麻痺性）に分かれる。",
+      pathophysiology: "【癒着性腸閉塞】開腹手術（結腸切除等）の既往があり、術後早期〜数年経過してから癒着を起点に発症する。<br>【閉鎖孔ヘルニア】高齢・やせ型・多産の女性に好発。骨盤底の閉鎖管に腸管が嵌頓する。",
+      symptoms: "腹痛、嘔吐、排便・排ガスの停止。閉鎖孔ヘルニア嵌頓時は大腿内側から膝にかけての痛み（Howship-Romberg徴候）を認める。",
+      treatment: "絞扼性（腸管虚血：筋性防御、CK/乳酸上昇）を疑えば直ちに緊急手術。単純性はイレウス管等の保存的治療（腸閉塞診療ガイドライン）。",
+      links: ["crc", "postop-peritonitis"]
+    });
+
+    addMedicalContent({
+      id: "postop-peritonitis",
+      category: "消化管",
+      title: "術後合併症 (縫合不全・汎発性腹膜炎)",
+      overview: "消化管吻合部の破綻（縫合不全）により腸内容物が腹腔内に漏出する重篤な術後合併症。",
+      symptoms: "発熱、頻脈。術後ドレーンからの悪臭・混濁排液、便汁の流出。腹部全体に及ぶ筋性防御（板状硬）や反跳痛。",
+      treatment: "腹膜炎（筋性防御）を呈した場合は速やかに緊急再手術（洗浄・ドレナージ、ストーマ造設）。敗血症性ショックへの移行を防ぐ。",
+      links: ["ileus-hernia", "sepsis"]
+    });
+
+    addMedicalContent({
+      id: "short-bowel-syndrome",
+      category: "消化管",
+      title: "短腸症候群 (SBS)",
+      overview: "広範な小腸切除（クローン病、上腸間膜動脈閉塞症等）により、吸収面積が著しく減少し、吸収不良・低栄養・下痢を来す状態。",
+      treatment: "術後初期は中心静脈栄養(TPN)で管理。その後、残存腸管の絨毛肥大（腸管順応：Intestinal adaptation）を促すため、早期から少量ずつの経腸栄養（成分栄養剤[ED]等）を開始する。",
+      links: ["ileus-hernia", "iv-fluids"]
+    });
 
     // ==================================================
     // 肝胆膵
@@ -1096,6 +1238,89 @@
       treatment: "初期輸液（細胞外液）が最重要。絶飲食、鎮痛薬。重症例では動脈注入療法や膵局所合併症（感染性膵壊死等）に対するドレナージ・ネクロセクトミーを検討（急性膵炎診療ガイドライン）。",
       links: ["hcc"]
     });
+    // ==================================================
+    // 肝胆膵
+    // ==================================================
+    addMedicalContent({
+      id: "masld-mash",
+      category: "肝胆膵",
+      title: "MASLD / MASH (代謝機能障害関連脂肪性肝疾患)",
+      overview: "2023年にNAFLD/NASHから呼称・定義が変更。脂肪肝に心血管代謝リスク因子（肥満、2型糖尿病、高血圧等）が1つ以上伴う病態。",
+      pathophysiology: "MASH（代謝機能障害関連脂肪性肝炎）へ進行すると、肝線維化が進行し肝硬変・肝細胞癌の発症リスクとなる。また心血管イベントリスクと強く相関する。",
+      treatment: "食事・運動による体重減少が基本。合併する代謝疾患に対するGLP-1受容体作動薬やSGLT2阻害薬などの介入。",
+      links: ["hcc", "t2dm", "liver-cirrhosis"]
+    });
+
+    addMedicalContent({
+      id: "hcc",
+      category: "肝胆膵",
+      title: "肝細胞癌 (HCC)",
+      overview: "B型/C型慢性肝炎、肝硬変、MASLD/MASHを背景に発生する原発性肝悪性腫瘍。",
+      severity: "【Child-Pugh分類】肝予備能の評価。腹水、脳症、血清ビリルビン、血清アルブミン、プロトロンビン時間(PT)の5項目でA/B/Cにスコア化。",
+      treatment: "肝予備能（Child-Pugh）と腫瘍の数・大きさに基づき、肝切除、RFA、TACE、薬物療法を決定。<br>【肝転移の扱い】大腸癌等の「転移性肝癌」はHCCとは異なり、原発巣の性質を引継ぐ。切除可能であれば積極的な外科的切除（肝切除）が予後向上に寄与する（大腸癌治療ガイドライン）。",
+      links: ["child-pugh", "masld-mash", "crc"]
+    });
+
+    addMedicalContent({
+      id: "child-pugh",
+      category: "肝胆膵",
+      title: "Child-Pugh 分類",
+      overview: "肝硬変・肝細胞癌患者の肝予備能を評価するスコアリングシステム。",
+      diagnosisCriteria: "評価項目（各1〜3点）：<br>1. 肝性脳症の程度<br>2. 腹水の程度<br>3. 血清ビリルビン値<br>4. 血清アルブミン値<br>5. プロトロンビン時間 (PT-INR 等)<br>合計点でA(5-6点)、B(7-9点)、C(10-15点)に分類。",
+      links: ["hcc", "liver-cirrhosis"]
+    });
+
+    addMedicalContent({
+      id: "acute-pancreatitis",
+      category: "肝胆膵",
+      title: "急性膵炎 (分類・治療)",
+      overview: "膵酵素の異常活性化による自己消化を主病態とする急性の炎症。",
+      severity: "造影CTによる局所進展度と、SIRS等による予後因子スコアを用いて重症度判定を行う。",
+      treatment: "初期治療は大量の細胞外液輸液。重症例では蛋白分解酵素阻害薬の持続静注。感染性膵壊死を合併した場合は内視鏡的または外科的ドレナージ（ネクロセクトミー）の適応（急性膵炎診療ガイドライン）。",
+      links: ["pancreatic-cancer", "sepsis"]
+    });
+
+    addMedicalContent({
+      id: "pancreatic-cystic-neoplasms",
+      category: "肝胆膵",
+      title: "膵嚢胞性腫瘍 (IPMN / MCN / SCN)",
+      overview: "膵臓に発生する嚢胞性病変の鑑別。",
+      differential: "・IPMN (膵管内乳頭粘液性腫瘍)：主膵管や分枝膵管と交通する。高齢男性に多い。粘液産生により主膵管が拡張。悪性化リスクあり。<br>・MCN (粘液性嚢胞腫瘍)：中年の女性、膵尾部に好発。被膜を有し卵巣様間質を伴う。悪性化リスクあり。<br>・SCN (漿液性嚢胞腫瘍)：中高年女性。ハニカム状の小嚢胞集簇。原則として良性。",
+      links: ["pancreatic-cancer"]
+    });
+
+    addMedicalContent({
+      id: "pancreatic-cancer",
+      category: "肝胆膵",
+      title: "膵癌 / 十二指腸乳頭部癌",
+      overview: "【膵癌】膵管上皮由来の浸潤性膵管癌が大部分。予後極めて不良。無痛性の閉塞性黄疸（膵頭部癌）などで発見される。<br>【十二指腸乳頭部癌】ファーター乳頭部に発生する癌。膵癌より比較的早期に黄疸で発見されやすく、切除率や予後は膵癌より良好とされる。",
+      treatment: "切除可能例には膵頭十二指腸切除術(PD)など。近年は術前補助化学療法（GS療法等）の有用性が示されている。",
+      links: ["acute-pancreatitis", "pancreatic-cystic-neoplasms"]
+    });
+
+    addMedicalContent({
+      id: "hcc",
+      category: "肝胆膵",
+      title: "肝細胞癌 (HCC)",
+      overview: "B型/C型慢性肝炎、肝硬変、MASLD/MASHを背景に発生する原発性肝悪性腫瘍。",
+      riskFactors: "B型肝炎ウイルス(HBV)、C型肝炎ウイルス(HCV)感染、アルコール性肝障害、非アルコール性脂肪肝炎(NASH/MASLD)。",
+      diagnosis: "腹部造影CT/MRI（ダイナミック撮影）での早期濃染(early enhancement)と後期ウォッシュアウト(washout)。腫瘍マーカー（AFP、PIVKA-II）。",
+      severity: "【Child-Pugh分類】肝予備能の評価。腹水、脳症、血清ビリルビン、血清アルブミン、プロトロンビン時間(PT)の5項目でA/B/Cにスコア化。",
+      treatment: "肝予備能（Child-Pugh）と腫瘍の数・大きさに基づき、肝切除、RFA、TACE、薬物療法(アテゾリズマブ＋ベバシズマブ等)、肝移植を決定。<br>【肝転移の扱い】大腸癌等の「転移性肝癌」はHCCとは異なり、原発巣の性質を引継ぐ。切除可能であれば積極的な外科的切除（肝切除）が予後向上に寄与する（大腸癌治療ガイドライン）。",
+      links: ["child-pugh", "masld-mash", "crc", "liver-cirrhosis"]
+    });
+
+    addMedicalContent({
+      id: "acute-pancreatitis",
+      category: "肝胆膵",
+      title: "急性膵炎",
+      overview: "膵酵素の異常活性化による自己消化を主病態とする急性の炎症。",
+      riskFactors: "アルコール多飲、胆石症が二大原因。",
+      diagnosisCriteria: "①上腹部の急性腹痛と圧痛、②血中・尿中膵酵素（アミラーゼ、リパーゼ等）の上昇、③画像（造影CT等）で急性膵炎に伴う異常所見。3項目中2項目を満たせば診断。",
+      severity: "造影CTによる局所進展度と、SIRS等による予後因子スコアを用いて重症度判定を行う。",
+      treatment: "初期治療は大量の細胞外液輸液が最重要。絶飲食、鎮痛薬。重症例では蛋白分解酵素阻害薬の持続静注や動脈注入療法。感染性膵壊死を合併した場合は、内視鏡的または外科的ドレナージ（ネクロセクトミー）の適応（急性膵炎診療ガイドライン）。",
+      links: ["pancreatic-cancer", "sepsis"]
+    });
 
      // ==================================================
     // 集中治療・感染症
@@ -1109,6 +1334,16 @@
       treatment: "【敗血症性ショック】十分な初期輸液（細胞外液）を行っても平均血圧≧65mmHgを維持するために血管収縮薬（ノルアドレナリンが第一選択）を要し、かつ血清乳酸値>2mmol/L(18mg/dL)の状態。<br>1時間以内の広域抗菌薬静注、迅速な感染源コントロール（ドレナージ等）が予後を左右する（日本版敗血症診療ガイドライン）。",
       links: ["sofa-score", "aki"]
     });
+    
+     addMedicalContent({
+      id: "hbv-reactivation",
+      category: "感染症",
+      title: "B型肝炎の再活性化 (免疫抑制時)",
+      overview: "抗がん剤や免疫抑制薬の投与により、体内に潜伏していたHBVが再増殖し劇症肝炎等を来す病態。",
+      importantPoints: "R-CHOP療法（リツキシマブ等の抗CD20抗体）など強力な免疫抑制治療を行う場合、HBs抗原陰性であってもHBc抗体やHBs抗体が陽性（既往感染）の患者は再活性化のリスクがある。「B型肝炎治療ガイドライン」に基づき、治療中および治療後も定期的に【HBV-DNA量のモニタリング（月1回等）】を行い、陽転化した場合は速やかに核酸アナログ製剤（エンテカビル等）を投与する。",
+      links: ["dlbcl", "mtx-adverse-effects"]
+    });
+
 
     // ==================================================
     // 腎臓・代謝（追加疾患）
@@ -1147,6 +1382,153 @@
       medication: "インスリン抵抗性改善薬（ビグアナイド薬）、インスリン分泌促進薬（DPP-4阻害薬、GLP-1受容体作動薬）、SGLT2阻害薬など。心血管疾患・心不全・CKD合併例にはSGLT2阻害薬やGLP-1受容体作動薬を優先する。",
       links: ["ckd", "heart-failure"]
     });
+    // ==================================================
+    // 内分泌・代謝内科
+    // ==================================================
+    addMedicalContent({
+      id: "acromegaly",
+      category: "内分泌代謝",
+      title: "先端巨大症 (Acromegaly)",
+      overview: "下垂体前葉のGH産生腺腫により、成長ホルモン(GH)およびIGF-1が過剰分泌される疾患。",
+      diagnosis: "【スクリーニング】血清IGF-1(ソマトメジンC)の高値。<br>【確定診断】75g経口ブドウ糖負荷試験(OGTT)にてGH分泌が抑制されない（正常では血糖上昇によりGHは抑制される）。",
+      treatment: "経蝶形骨洞的腫瘍摘出術(Hardy手術)。薬物療法としてソマトスタチンアナログ（オクトレオチド等）やGH受容体拮抗薬（ペグビソマント）。",
+      links: ["endocrine-tests", "cushing-syndrome"]
+    });
+
+    addMedicalContent({
+      id: "cushing-syndrome",
+      category: "内分泌代謝",
+      title: "クッシング症候群 / クッシング病",
+      overview: "慢性的なコルチゾール過剰による症候群（満月様顔貌、中心性肥満、高血圧、耐糖能異常など）。",
+      pathophysiology: "・クッシング病：下垂体前葉のACTH産生腺腫による（ACTH依存性）。<br>・副腎性クッシング症候群：副腎皮質腫瘍によるコルチゾール自律分泌（ACTH非依存性、ACTHは抑制される）。",
+      diagnosis: "デキサメタゾン抑制試験（低用量で抑制されなければクッシング症候群、高用量で抑制されれば下垂体性[クッシング病]を示唆）。",
+      links: ["endocrine-tests"]
+    });
+
+    addMedicalContent({
+      id: "endocrine-tests",
+      category: "内分泌代謝",
+      title: "内分泌負荷・抑制試験",
+      overview: "ホルモンの過剰や欠乏を評価するための動的検査。",
+      diagnosis: "【抑制試験】本来ホルモン分泌を抑える刺激を与えても分泌が続くかを見る。<br>・OGTT試験 → 先端巨大症ではGHが抑制されない。<br>・デキサメタゾン試験 → クッシング症候群ではコルチゾールが抑制されない。<br>【刺激試験】<br>・インスリン低血糖試験 / グルカゴン負荷試験 → GH分泌不全症などの評価。低血糖等の誘発によりGH等の分泌が刺激されるかを評価する（下垂体機能低下症の診断）。",
+      links: ["acromegaly", "cushing-syndrome", "diabetes-insipidus"]
+    });
+
+    addMedicalContent({
+      id: "diabetes-insipidus",
+      category: "内分泌代謝",
+      title: "尿崩症 (Diabetes Insipidus)",
+      overview: "抗利尿ホルモン(ADH: バソプレシン)の作用不足により、多尿・口渇・多飲を来す疾患。",
+      pathophysiology: "【中枢性】下垂体後葉からのADH分泌低下（特発性、腫瘍、外傷など）。<br>【腎性】腎集合管におけるADH受容体（V2受容体）の反応性低下（リチウム中毒など）。",
+      diagnosis: "水制限試験や高張食塩水負荷試験。中枢性にはデスモプレシン(DDAVP)の点鼻・経口投与が著効する。",
+      links: ["endocrine-tests", "calcium-phosphorus-disorders"]
+    });
+
+    addMedicalContent({
+      id: "dm-drugs",
+      category: "内分泌代謝",
+      title: "糖尿病治療薬と副作用",
+      overview: "2型糖尿病における代表的な血糖降下薬と注意すべき副作用。",
+      medication: "・ビグアナイド薬（メトホルミン）：乳酸アシドーシス（腎機能低下例やヨード造影剤使用時注意）。<br>・SGLT2阻害薬：尿路・性器感染症、脱水、正常血糖ケトアシドーシス（特にシックデイ）。<br>・DPP-4阻害薬 / GLP-1受容体作動薬：胃腸障害、急性膵炎。<br>・SU薬（スルホニル尿素）：重篤で遷延する低血糖、体重増加。",
+      links: ["dka-hhs", "t2dm", "gdm"]
+    });
+
+    addMedicalContent({
+      id: "gdm",
+      category: "内分泌代謝",
+      title: "妊娠糖尿病 (GDM)",
+      overview: "妊娠中に初めて発見・発症した糖代謝異常。巨大児や新生児低血糖などの合併症リスクとなる。",
+      treatment: "食事療法が基本。非妊娠時の標準体重あたり 30kcal/kg ＋ 妊娠時期に応じた付加量（初期+50, 中期+250, 後期+450 kcal）を目安とする（日本産科婦人科学会等）。目標血糖を満たさなければインスリン療法を導入（経口薬は原則禁忌）。",
+      links: ["dm-drugs"]
+    });
+
+    addMedicalContent({
+      id: "calcium-phosphorus-disorders",
+      category: "内分泌代謝",
+      title: "カルシウム・リン代謝異常",
+      overview: "副甲状腺ホルモン(PTH)、ビタミンDによるCa、Pの調節異常。",
+      differential: "【原発性副甲状腺機能亢進症】PTH過剰分泌。高Ca血症、低P血症。<br>【慢性腎臓病(CKD/二次性)】活性型ビタミンD低下とP排泄低下により、低Ca血症、高P血症。代償的にPTHが上昇（二次性副甲状腺機能亢進症）。",
+      links: ["ckd", "endocrine-tests"]
+    });
+    
+      addMedicalContent({
+      id: "thyroid-cancer",
+      category: "内分泌代謝",
+      title: "甲状腺癌 / 放射性ヨウ素内用療法",
+      overview: "甲状腺から発生する悪性腫瘍。乳頭癌（最多）、濾胞癌、髄様癌、未分化癌がある。",
+      treatment: "分化癌（乳頭癌、濾胞癌）に対する外科的切除。再発高リスクの全摘後や遠隔転移（肺転移・骨転移）例に対しては、分化癌細胞がヨウ素を取り込む性質を利用した【放射性ヨウ素(I-131)内用療法】が適応となる。",
+      links: ["recurrent-laryngeal-nerve-palsy"]
+    });
+
+    // ==================================================
+    // 膠原病・リウマチ内科
+    // ==================================================
+    addMedicalContent({
+      id: "ra",
+      category: "膠原病",
+      title: "関節リウマチ (RA)",
+      overview: "自己免疫により多発性の滑膜炎が生じ、関節破壊を来す疾患。",
+      diagnosis: "リウマトイド因子(RF)陽性、抗CCP抗体陽性。※RA単独では指定難病ではないが、血管炎を合併する「悪性関節リウマチ」は難病法に基づく指定難病である。",
+      medication: "第一選択薬は【メトトレキサート (MTX)】。効果不十分例に生物学的製剤（TNF阻害薬等）やJAK阻害薬を併用。",
+      importantPoints: "長年にわたる慢性炎症（高SAA血症）により、腎臓等にAAアミロイドが沈着する「AAアミロイドーシス」を合併し、ネフローゼ症候群（蛋白尿）や腎機能低下を来すことがある。",
+      links: ["mtx-adverse-effects", "sjogren", "intractable-disease-law"]
+    });
+
+    addMedicalContent({
+      id: "mtx-adverse-effects",
+      category: "膠原病",
+      title: "メトトレキサート (MTX) の副作用",
+      overview: "RAのアンカー薬であるMTXの注意すべき合併症。",
+      symptoms: "骨髄抑制、肝機能障害、間質性肺炎、口内炎。MTX関連リンパ増殖性疾患(MTX-LPD: 一種の悪性腫瘍[がん])を合併することがあり、この場合は【休薬】のみで自然退縮することがある。",
+      importantPoints: "MTXは大部分が腎排泄されるため、腎機能低下例では血中濃度が上昇し重篤な副作用（致死的骨髄抑制等）を招く。用量調節や休薬が必須。",
+      links: ["ra"]
+    });
+
+    addMedicalContent({
+      id: "sjogren",
+      category: "膠原病",
+      title: "シェーグレン症候群",
+      overview: "涙腺・唾液腺へのリンパ球浸潤により、乾燥症状（ドライアイ・ドライマウス）を来す自己免疫疾患。RA等に二次性に合併することも多い。",
+      diagnosis: "抗SS-A抗体、抗SS-B抗体陽性。シルマー試験、ガムテスト。口唇腺生検。",
+      links: ["ra", "sle"]
+    });
+
+    addMedicalContent({
+      id: "sle",
+      category: "膠原病",
+      title: "全身性エリテマトーデス (SLE)",
+      overview: "抗核抗体を中心とする多彩な自己抗体が産生され、全身臓器の炎症を来す自己免疫疾患。若い女性に多い。",
+      symptoms: "蝶形紅斑、日光過敏、ループス腎炎、中枢神経ループス。",
+      treatment: "ステロイド全身投与、ヒドロキシクロロキン、免疫抑制薬。",
+      links: ["sjogren", "nbte", "behcet"]
+    });
+
+    addMedicalContent({
+      id: "dermatomyositis",
+      category: "膠原病",
+      title: "皮膚筋炎 / 悪性腫瘍合併",
+      overview: "近位筋の筋力低下と特異的皮疹（ヘリオトロープ疹、Gottron徴候）を特徴とする自己免疫疾患。",
+      importantPoints: "特異自己抗体の種類により合併症が異なる。特に【抗TIF1-γ抗体】陽性例は、悪性腫瘍（胃癌、大腸癌、乳癌など）の高率な合併が知られており、全身の癌スクリーニングが必須である。",
+      links: ["sle", "ssc"]
+    });
+
+    addMedicalContent({
+      id: "ssc",
+      category: "膠原病",
+      title: "全身性強皮症 (SSc)",
+      overview: "皮膚や内臓の線維化および末梢血管障害を特徴とする自己免疫疾患。",
+      pathophysiology: "【心病変】強皮症における心病変は予後規定因子となる。①心筋自体の線維化（patchy fibrosis）による不整脈や心不全、②微小血管障害（心筋虚血）、③間質性肺疾患(ILD)から進行する肺高血圧症に伴う「右心不全（肺性心：cor pulmonale）」が代表的。",
+      links: ["pah", "heart-failure", "dermatomyositis"]
+    });
+
+    addMedicalContent({
+      id: "behcet",
+      category: "膠原病",
+      title: "ベーチェット病 (Behcet's disease)",
+      overview: "再発性の全身性炎症性疾患。HLA-B51と関連。",
+      symptoms: "主症状：口腔内アフタ性潰瘍、外陰部潰瘍、皮膚症状（結節性紅斑）、眼症状（ぶどう膜炎）。副症状として腸管・血管・神経病変。",
+      links: ["sle"]
+    });
 
     // ==================================================
     // 神経
@@ -1165,6 +1547,20 @@
       pathophysiology: "ラクナ梗塞、アテローム血栓性脳梗塞、心原性脳塞栓症（心房細動等が原因）に大別される。",
       treatment: "超急性期はrt-PA静注療法、カテーテルによる機械的血栓回収療法。急性期以後は病型に応じた抗血小板薬（アスピリン、クロピドグレル等）または抗凝固薬（DOAC、ワルファリン）による再発予防（脳卒中治療ガイドライン）。",
       links: ["af"]
+    });
+    
+    // ==================================================
+    // 小児科・小児外科
+    // ==================================================
+    addMedicalContent({
+      id: "chps",
+      category: "小児外科",
+      title: "肥厚性幽門狭窄症 (CHPS)",
+      overview: "生後2-3週〜数ヶ月の乳児に発症する、胃の幽門輪筋の著明な肥厚による胃排出障害。",
+      symptoms: "授乳後の【非胆汁性・噴水状嘔吐】。体重増加不良。",
+      diagnosis: "腹部超音波検査で幽門筋の肥厚と延長（cervix sign等）を確認。嘔吐に伴う胃酸（HCl）喪失により、【低クロール性・低カリウム性代謝性アルカローシス】を呈する。",
+      treatment: "脱水とアルカローシスの補液による完全な補正後、外科的に Ramstedt（ラムステッド）粘膜外筋層切開術 を行う。",
+      links: ["iv-fluids"]
     });
 
     // ==================================================
@@ -1292,6 +1688,117 @@
       differential: "■ 意識障害 (Altered Mental Status)<br>・意識がない状態が「現在も持続している」。<br>・脳全体の問題（代謝性、薬物中毒、広範な脳内病変など）。<br><br>■ 一過性意識消失 (TLoC) ＝ 意識はすでに「完全に回復した」<br>以下の2つが代表的。<br>① 失神 (Syncope)：脳の血流が一時的に低下。数秒〜数十秒で回復し、目覚めはスッキリしている。姿勢保持ができず倒れる。<br>② てんかん発作 (Seizure)：脳の異常な電気活動。痙攣（特に四肢の強直間代性痙攣）を伴うことが多く、発作後はしばらく「もうろう状態（Postictal confusion）」が続く。舌咬傷や失禁を伴いやすい。<br><br>■ TIA (一過性脳虚血発作)<br>・脳の「局所」の血流低下。片麻痺や失語などの局所症状が起きて、その後回復する。<br>・原則として「意識消失は起こさない」（※例外として、椎骨脳底動脈領域の虚血で脳幹の網様体賦活系が障害された場合は意識を失うことがあるが、まれ）。<br>・「失神」を主訴に来院した患者を安易に「TIA」と診断してはいけない。",
       importantPoints: "「意識を失って倒れたが今は元気」な患者に対し、最初に確認すべきは「失神（血流の問題）」か「てんかん発作（電気の問題）」かの鑑別である。そして失神であれば「致死的な心原性失神」を12誘導ECG等で確実に除外する。",
       links: ["syncope", "tloc", "tia", "altered-mental-status"]
+    });
+    // ==================================================
+    // 救急・集中治療・麻酔科・電解質
+    // ==================================================
+    addMedicalContent({
+      id: "dka-hhs",
+      category: "救急",
+      title: "DKA と HHS (高血糖緊急症)",
+      overview: "糖尿病ケトアシドーシス(DKA)と高浸透圧高血糖状態(HHS)。ともに高度の脱水と高血糖を呈する救急疾患。",
+      diagnosis: "【DKA】1型糖尿病に多い。インスリン枯渇によりケトン体が蓄積し代謝性アシドーシスを来す。Kussmaul大呼吸。<br>【HHS】高齢の2型糖尿病に多い。アシドーシスはないが、著明な高血糖（>600mg/dL等）による血清浸透圧の著明な上昇と、高度の脱水（眼球陥凹、皮膚ツルゴール低下）による意識障害を呈する。",
+      treatment: "初期治療は「大量の細胞外液（生理食塩水 [NaCl]）の急速輸液」。<br>血清浸透圧（2×Na + Glu/18 + BUN/2.8）を計算し脱水を評価。※乳酸アシドーシス増悪や肝代謝の負担懸念から、乳酸リンゲル（ラクテート）は初期輸液として積極的には用いない。<br>血清K値を確認した上で速効型インスリン持続静注を開始。血糖が200mg/dLを下回ったらブドウ糖（糖）入りの輸液へ変更し低血糖と脳浮腫を防ぐ。",
+      links: ["dm-drugs", "iv-fluids"]
+    });
+
+    addMedicalContent({
+      id: "iv-fluids",
+      category: "救急",
+      title: "輸液の基本 (晶質液・膠質液 / 細胞内・外液)",
+      overview: "輸液療法における製剤の分類と使い分け。",
+      definition: "【晶質液 (Crystalloid)】電解質や糖を含む低分子の溶液。<br>・細胞外液補充液：生理食塩水、乳酸リンゲル、酢酸リンゲルなど。血管内と間質（細胞外）に分布。出血やショック、脱水の蘇生初期輸液に用いる。<br>・細胞内液補充液（維持液等）：ブドウ糖を含み、浸透圧調整により細胞内にも水分を移行させる。脱水蘇生（ショック）には不適。<br>【膠質液 (Colloid)】アルブミン製剤など高分子を含む溶液。血管内にとどまり血漿増量効果が高いが、アナフィラキシーやコストに注意。",
+      links: ["dka-hhs", "sepsis"]
+    });
+
+    addMedicalContent({
+      id: "burn",
+      category: "救急",
+      title: "熱傷 (Burns) 深度・面積算定",
+      overview: "熱による皮膚・組織傷害。重症度により大量の輸液（Parkland処方等）が必要となる。",
+      diagnosis: "【深度(Depth)】I度(表皮:発赤), II度浅い(真皮浅層:水疱・激痛), II度深い(真皮深層:水疱・痛覚鈍麻), III度(全層:蒼白/羊皮紙様・無痛)。<br>【面積算定法】①9の法則 (成人：頭9, 上肢9×2, 体幹前面18, 体幹後面18, 下肢18×2, 陰部1%)、②5の法則 (乳児)、③Lund-Browder法 (年齢に応じた精密な比率)、④手掌法 (患者の手のひらが約1%)。",
+      links: ["sepsis", "iv-fluids"]
+    });
+
+    addMedicalContent({
+      id: "sepsis-qsofa",
+      category: "救急",
+      title: "敗血症・ショック / SOFA・qSOFA",
+      overview: "感染による制御不能な宿主反応により生じる生命を脅かす臓器障害。",
+      diagnosis: "【SOFAスコア項目】呼吸(P/F比), 凝固(血小板), 肝(ビリルビン), 循環(血圧/カテコールアミン), 中枢神経(GCS), 腎(Cre/尿量)。<br>【qSOFA (Quick SOFA)】敗血症を疑うスクリーニングツール。①呼吸数≧22回/分、②精神状態の変化(GCS<15)、③収縮期血圧≦100mmHg のうち2項目以上を満たせば敗血症疑い。<br>※菌血症（血液中に細菌が存在する状態）は敗血症の原因の一つだが、同義ではない。",
+      links: ["sofa-score", "postop-peritonitis", "ie"]
+    });
+
+    addMedicalContent({
+      id: "mamushi-bite",
+      category: "救急",
+      title: "マムシ咬傷",
+      overview: "ニホンマムシの毒牙による刺咬傷。マムシ毒は出血毒・血管毒・筋肉毒を有する。",
+      symptoms: "局所の著明な腫脹、疼痛、皮下出血。全身症状として横紋筋融解症、急性腎障害(AKI)、DIC。",
+      importantPoints: "横紋筋融解や血管透過性亢進（サードスペースへの水漏出）により高度の「血管内脱水」を来しAKIに至る。したがって、腎機能保持を目的とした安易な「利尿剤投与」は脱水を助長し腎不全を悪化させるため【禁忌】である。治療の基本は抗毒素血清の投与と、十分な細胞外液輸液である。",
+      links: ["aki", "iv-fluids"]
+    });
+    // ==================================================
+    // 耳鼻咽喉科・頭頸部外科 / 呼吸器
+    // ==================================================
+    addMedicalContent({
+      id: "recurrent-laryngeal-nerve-palsy",
+      category: "耳鼻咽喉",
+      title: "反回神経麻痺 (嗄声)",
+      overview: "迷走神経の枝である反回神経の障害により、声帯運動が麻痺する状態。",
+      pathophysiology: "左反回神経は大動脈弓を、右反回神経は鎖骨下動脈を反回して上行し喉頭へ至る。走行経路に位置する【食道癌】【甲状腺癌】【大動脈瘤】【肺癌】の浸潤や、これらの手術合併症として生じやすい。",
+      symptoms: "嗄声（かすれ声）、誤嚥。",
+      links: ["esophageal-cancer", "thyroid-cancer", "dysphagia"]
+    });
+
+  
+
+    addMedicalContent({
+      id: "dysphagia",
+      category: "耳鼻咽喉",
+      title: "嚥下機能障害",
+      overview: "食物の認知から胃への送り込みまでの過程が障害された状態。誤嚥性肺炎の主要因。",
+      diagnosis: "反復唾液嚥下テスト(RSST)、水飲みテスト、嚥下内視鏡検査(VE)、嚥下造影検査(VF)。",
+      links: ["recurrent-laryngeal-nerve-palsy", "deep-neck-infection"]
+    });
+
+    addMedicalContent({
+      id: "deep-neck-infection",
+      category: "耳鼻咽喉",
+      title: "深頸部感染症 / 気道閉塞 (ストライダー)",
+      overview: "齲歯（虫歯）や扁桃炎などを契機に、頸部筋膜間隙に感染が波及し膿瘍を形成する重篤な疾患（Ludwig's anginaなど）。",
+      symptoms: "嚥下困難、開口障害、発熱、頸部の著明な圧痛・腫脹。気道が圧迫・狭窄すると【ストライダー（吸気性喘鳴）】を生じ、窒息の危機が迫る。",
+      treatment: "直ちに気道確保（気管挿管や気管切開の準備）。早期の切開排膿（ドレナージ）と広域抗菌薬（ペニシリン系、アンピシリン・スルバクタム等）の静注。",
+      links: ["dysphagia", "sepsis-qsofa"]
+    });
+
+    // ==================================================
+    // 法医学・社会医学・その他
+    // ==================================================
+    addMedicalContent({
+      id: "brain-death-transplant",
+      category: "社会医学",
+      title: "脳死臓器移植",
+      overview: "脳死と判定された者からの臓器摘出・移植に関する規定。",
+      importantPoints: "2010年改正の「臓器の移植に関する法律」により、本人の書面による意思表示がない場合（または不明な場合）でも、【家族の書面による承諾】があれば脳死判定および臓器提供が可能となった。また、15歳未満の小児からの脳死臓器提供も法的に可能である。",
+      links: ["acls"]
+    });
+
+    addMedicalContent({
+      id: "intractable-disease-law",
+      category: "社会医学",
+      title: "難病法 (指定難病制度)",
+      overview: "「難病の患者に対する医療等に関する法律」に基づき、発病の機構が明らかでなく、治療方法が未確立であり、長期の療養を必要とする疾患の患者に対し医療費助成を行う制度。関節リウマチ単独は対象外だが、悪性関節リウマチ等は指定難病に含まれる。",
+      links: ["ra", "ssc", "cteph"]
+    });
+
+    addMedicalContent({
+      id: "medical-gases",
+      category: "その他",
+      title: "医療ガス (配管・ボンベの識別)",
+      overview: "医療事故（取り違え）を防ぐため、医療用ガスのボンベや配管のピンインデックス・色彩は厳格に統一されている。",
+      importantPoints: "【日本産業規格(JIS)等における主な識別色】<br>・酸素 (O2)：黒色（ボンベ全体）、配管アウトレットは緑色。<br>・亜酸化窒素（笑気 / N2O）：青色。<br>・二酸化炭素 (CO2)：緑色。<br>・治療用空気 (Air)：黄色。<br>※注意：酸素ボンベの色は国によって異なり、米国では緑色、日本では黒色が標準である。",
+      links: ["acls", "iv-fluids"]
     });
 
   </script>
